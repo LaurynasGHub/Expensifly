@@ -1,1 +1,65 @@
+.navContainer {
+  font-family: appleGothic;
 
+  //   white-space: nowrap;
+  //   margin: 2%;
+  padding: 2%;
+
+  //   background: var(--mint-300);
+  background: #3fffc4;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .navTitleContainer {
+    // margin-bottom: 0;
+    .navTitle {
+      font-weight: bold;
+    }
+    p {
+      @media only screen and (max-width: 830px) {
+        display: none;
+      }
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    gap: 7rem;
+
+    li {
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-left: 10%;
+      }
+    }
+
+    a {
+      @media only screen and (max-width: 830px) {
+        display: none;
+      }
+    }
+
+    @media only screen and (max-width: 830px) {
+      //   margin: 2% 8%;
+      padding: 2% 8%;
+    }
+
+    .navbarCurrentPrices {
+      a {
+        width: 7.2rem;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 830px) {
+    // margin: 2% 8%;
+    padding: 2% 8%;
+    flex-direction: column;
+    align-items: center;
+  }
+}
