@@ -1,6 +1,8 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
 import './navbar.scss';
-import { NavLink } from 'react-bootstrap';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faReceipt,
@@ -12,7 +14,6 @@ function Navbar() {
   return (
     <nav className="navContainer">
       <div className="navTitleContainer">
-        {/* <h1 className="navTitle">Expensifly</h1> */}
         <NavLink to="/">
           <h1 className="navTitle">Expensifly</h1>
         </NavLink>
@@ -20,15 +21,15 @@ function Navbar() {
       </div>
       <ul className="mb-0">
         <li>
-          <NavLink to="">Receipts</NavLink>
+          <NavLink to="/receipts">Receipts</NavLink>
           <FontAwesomeIcon icon={faReceipt} />
         </li>
         <li>
-          <NavLink to="">Expenses</NavLink>
+          <NavLink to="/expenses">Expenses</NavLink>
           <FontAwesomeIcon icon={faDollarSign} />
         </li>
         <li className="navbarCurrentPrices">
-          <NavLink to="">Current prices </NavLink>
+          <NavLink to="/current-prices">Current prices </NavLink>
           <FontAwesomeIcon icon={faTag} />
         </li>
       </ul>
