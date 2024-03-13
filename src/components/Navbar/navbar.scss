@@ -1,20 +1,19 @@
 .navContainer {
-  font-family: appleGothic;
+  font-family: var(--font-family);
+  color: var(--text-color);
 
   padding: 2%;
 
-  //   background: var(--mint-300);
-  // background: #3fffc4;
-  background: var(--background-mint);
+  background: var(--background-color);
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   .navTitleContainer {
-    // margin-bottom: 0;
     .navTitle {
       font-weight: bold;
+      color: var(--text-color);
     }
     p {
       @media only screen and (max-width: 830px) {
@@ -26,44 +25,40 @@
   ul {
     display: flex;
     flex-direction: row;
-    gap: 7rem;
+    gap: 5rem;
 
     li {
       display: flex;
       align-items: center;
 
       svg {
-        margin-left: 10%;
+        margin-left: 1.5rem;
+
+        @media only screen and (max-width: 830px) {
+          margin-left: 0;
+        }
       }
     }
 
     a {
+      color: var(--text-color);
       @media only screen and (max-width: 830px) {
         display: none;
       }
     }
 
     @media only screen and (max-width: 830px) {
-      //   margin: 2% 8%;
-      padding: 2% 8%;
+      padding-left: 0;
     }
-
-    .navbarCurrentPrices {
-      a {
-        width: 7.2rem;
-      }
-    }
-  }
-
-  @media only screen and (max-width: 830px) {
-    // margin: 2% 8%;
-    padding: 2% 8%;
-    flex-direction: column;
-    align-items: center;
   }
 
   a {
-    color: black;
     text-decoration: none;
+  }
+
+  //nav container resize behavior
+  @media only screen and (max-width: 830px) {
+    flex-direction: column;
+    align-items: center;
   }
 }
