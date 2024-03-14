@@ -1,0 +1,17 @@
+.receiptsPage {
+  .receiptsText {
+  }
+  .filterOptions {
+    display: flex;
+    justify-content: flex-start;
+
+    .filterByMonth {
+    }
+    .filterByYear {
+    }
+
+    @media only screen and (max-width: 400px) {
+      justify-content: space-around;
+    }
+  }
+}

@@ -2,8 +2,6 @@
   font-family: var(--font-family);
   color: var(--text-color);
 
-  padding: 2%;
-
   background: var(--background-color);
 
   display: flex;
@@ -16,7 +14,7 @@
       color: var(--text-color);
     }
     p {
-      @media only screen and (max-width: 830px) {
+      @media only screen and (max-width: 900px) {
         display: none;
       }
     }
@@ -25,30 +23,27 @@
   ul {
     display: flex;
     flex-direction: row;
-    gap: 5rem;
+
+    flex-wrap: wrap;
 
     li {
       display: flex;
       align-items: center;
-
-      svg {
-        margin-left: 1.5rem;
-
-        @media only screen and (max-width: 830px) {
-          margin-left: 0;
-        }
-      }
     }
 
     a {
       color: var(--text-color);
-      @media only screen and (max-width: 830px) {
+      @media only screen and (max-width: 900px) {
         display: none;
       }
     }
 
-    @media only screen and (max-width: 830px) {
+    @media only screen and (max-width: 900px) {
       padding-left: 0;
+    }
+
+    @media only screen and (max-width: 355px) {
+      flex-direction: column;
     }
   }
 
@@ -57,7 +52,7 @@
   }
 
   //nav container resize behavior
-  @media only screen and (max-width: 830px) {
+  @media only screen and (max-width: 900px) {
     flex-direction: column;
     align-items: center;
   }

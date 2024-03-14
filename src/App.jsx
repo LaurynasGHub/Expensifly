@@ -1,11 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import './App.scss';
 
 //components
 import Navbar from './components/Navbar/Navbar';
-import Main from './components/Main/Main';
 import Receipts from './components/Receipts/Receipts';
 import CurrentPrices from './components/CurrentPrices/CurrentPrices';
 import Expenses from './components/Expenses/Expenses';
