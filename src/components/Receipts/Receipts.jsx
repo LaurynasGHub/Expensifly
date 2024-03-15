@@ -16,7 +16,7 @@ function Receipts() {
       <div className="filterOptions p-3">
         <div className="filterByMonth">
           <select
-            class="form-select form-select-sm"
+            class="form-select form-select-sm shadow-none form-control"
             aria-label=".form-select-sm example"
           >
             <option selected>Select month</option>
@@ -27,7 +27,7 @@ function Receipts() {
         </div>
         <div className="filterByYear ps-3">
           <select
-            class="form-select form-select-sm"
+            class="form-select form-select-sm shadow-none form-control"
             aria-label=".form-select-sm example"
           >
             <option selected>Select year</option>
@@ -36,7 +36,14 @@ function Receipts() {
           </select>
         </div>
       </div>
-      <div className="receiptsFromMail"></div>
+      <div className="expensesWindow">
+        <div className="receiptsWindow w-50 my-3 ms-3 p-3 border rounded">
+          yeye
+        </div>
+        <div className="expensesBar w-50 my-3 me-3 p-3 border rounded">
+          yeye
+        </div>
+      </div>
     </div>
   );
 }
