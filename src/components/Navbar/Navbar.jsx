@@ -22,11 +22,11 @@ function Navbar() {
       </div>
       <ul className="mb-0">
         <li className="p-2">
-          <NavLink to="/receipts">Receipts / expenses</NavLink>
+          <NavLink to="/expenses">Expenses</NavLink>
           <FontAwesomeIcon className="p-4" icon={faReceipt} />
         </li>
         <li className="p-2">
-          <NavLink to="/expenses">Budget</NavLink>
+          <NavLink to="/budget">Budget</NavLink>
           <FontAwesomeIcon className="p-4" icon={faDollarSign} />
         </li>
         <li className="p-2">
@@ -34,7 +34,7 @@ function Navbar() {
           <FontAwesomeIcon className="p-4" icon={faTag} />
         </li>
         <li className="p-2">
-          <NavLink to="/current-prices">User </NavLink>
+          <NavLink to="/user">User </NavLink>
           <FontAwesomeIcon className="p-4" icon={faUser} />
         </li>
       </ul>

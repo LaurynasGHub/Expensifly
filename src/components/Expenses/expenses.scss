@@ -1,0 +1,50 @@
+.receiptsPage {
+  .receiptsText {
+  }
+  .filterOptions {
+    display: flex;
+    justify-content: flex-start;
+
+    select {
+      &:focus {
+        outline: none !important;
+      }
+    }
+    .filterByMonth {
+    }
+    .filterByYear {
+    }
+
+    @media only screen and (max-width: 400px) {
+      justify-content: space-around;
+    }
+  }
+  .expensesWindow {
+    display: flex;
+
+    .receiptsWindow {
+      @media only screen and (max-width: 400px) {
+        width: 100% !important;
+        margin-right: 1rem !important;
+      }
+    }
+
+    .expensesBar {
+      @media only screen and (max-width: 400px) {
+        //doesnt fit when resizing
+        width: 80% !important;
+        margin-left: 1rem !important;
+        margin-right: 1rem;
+      }
+    }
+
+    @media only screen and (max-width: 400px) {
+      flex-direction: column;
+    }
+  }
+}
+
+.form-control:focus {
+  border-color: rgb(192, 187, 187);
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
