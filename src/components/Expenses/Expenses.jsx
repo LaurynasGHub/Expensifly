@@ -2,17 +2,14 @@ import React from 'react';
 
 import './expenses.scss';
 
+//mockData
+import mockReceiptData from '../../mockReceiptData';
+
 //components
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
+import AddButton from '../AddExpenseButton/AddExpenseButton';
 
-const mockData = [
-  { productName: 'Meat', productPrice: 5 },
-  { productName: 'Apples', productPrice: 5 },
-  { productName: 'Oranges', productPrice: 5 },
-  { productName: 'Potatoes', productPrice: 45 },
-  { productName: 'Bread', productPrice: 35 },
-  { productName: 'Toilet paper', productPrice: 25 },
-];
+const mockData = mockReceiptData;
 
 function Receipts() {
   return (
@@ -53,6 +50,15 @@ function Receipts() {
           <div className="receiptCard border p-3 rounded">
             <h5>2023-May</h5>
           </div>
+          <div className="receiptCard border p-3 rounded">
+            <div className="input-group ">
+              <input type="text" className="form-control" placeholder="year" />
+              <input type="text" className="form-control" placeholder="month" />
+            </div>
+          </div>
+          {/* button to add new expense date on click
+          appears new window to insert date. then add empty expense bar with
+          option to add items */}
         </div>
         <div className="expensesBar w-50 my-3 me-3 p-1 border rounded">
           <ExpenseCard shopName={'Maxima'} month={'May'} data={mockData} />

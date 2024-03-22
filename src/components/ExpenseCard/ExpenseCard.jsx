@@ -1,6 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import './expenseCard.scss';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+//components
+// import AddExpenseButton from '../AddExpenseButton/AddExpenseButton';
 
 function ExpenseCard({ shopName, month, data }) {
   let calcPrice = 0;
@@ -12,12 +18,58 @@ function ExpenseCard({ shopName, month, data }) {
     calcPrice += priceArray[i];
   }
 
+  //adds expense element to expenses
+  const [expenses, setExpenses] = useState(data);
+
+  const addExpense = () => {
+    //get input items
+    let expenseName = document.getElementById('expenseName').value;
+    let expensePrice = document.getElementById('expensePrice').value;
+
+    //TODO fix
+    //somethings wrong with quotes, cant parse it as JSON gives error
+    let item = `{ productName: ${expenseName}, productPrice: ${expensePrice} }`;
+
+    console.log(item);
+
+    setExpenses(...expenses, JSON.parse(item));
+  };
+
   return (
-    <div className="expenseCard border p-3 rounded">
+    <div className="expenseCard p-3 border rounded ">
       <div className="expenseCardContents">
-        <table class="table">
+        <table className="table">
           <caption>
             Expenses at {shopName} on {month}
+            <div className="addButton">
+              <div className="input-group my-3 mb-3">
+                <input
+                  type="text"
+                  id="expenseName"
+                  className="form-control"
+                  placeholder="Expense name"
+                  aria-label="Expense name"
+                  aria-describedby="basic-addon2"
+                />
+                <input
+                  type="text"
+                  className="form-control"
+                  id="expensePrice"
+                  placeholder="Price"
+                  aria-label="Price"
+                  aria-describedby="basic-addon2"
+                />
+                <div className="input-group-append">
+                  <button
+                    className="btn btn-outline-secondary"
+                    type="submit"
+                    onClick={addExpense}
+                  >
+                    <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
+                  </button>
+                </div>
+              </div>
+            </div>
           </caption>
           <thead>
             <tr>
@@ -34,7 +86,7 @@ function ExpenseCard({ shopName, month, data }) {
             </tr>
           </thead>
           <tbody>
-            {data.map(({ productName, productPrice }) => (
+            {expenses.map(({ productName, productPrice }) => (
               <tr>
                 <td> {productName}</td>
                 <td> {productPrice}€</td>
@@ -43,6 +95,7 @@ function ExpenseCard({ shopName, month, data }) {
           </tbody>
         </table>
       </div>
+      {/* <AddButton /> */}
     </div>
   );
 }
