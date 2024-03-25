@@ -1,0 +1,16 @@
+/* text variables */
+:root {
+  /* --font-family: appleGothic; */
+  font-size: 1rem;
+}
+
+/* color pallete variables */
+:root {
+  --background-color: black;
+  --text-color: white;
+}
+
+/* mobile view variables */
+:root {
+  --mobile-view-width: 830px;
+}

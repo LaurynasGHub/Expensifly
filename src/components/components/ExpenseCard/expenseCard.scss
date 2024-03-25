@@ -1,0 +1,11 @@
+.expenseCard {
+  .expenseCardInfo {
+    display: flex;
+
+    justify-content: space-around;
+  }
+}
+
+.noBottomBorder {
+  border-bottom: none;
+}
