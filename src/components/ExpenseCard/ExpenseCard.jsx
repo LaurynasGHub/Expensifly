@@ -26,13 +26,26 @@ function ExpenseCard({ shopName, month, data }) {
     let expenseName = document.getElementById('expenseName').value;
     let expensePrice = document.getElementById('expensePrice').value;
 
+    // let inputExpense = JSON.stringify(expenses);
+
     //TODO fix
-    //somethings wrong with quotes, cant parse it as JSON gives error
+    //cant parse string to JSON
     let item = `{ productName: ${expenseName}, productPrice: ${expensePrice} }`;
 
-    console.log(item);
+    console.log('item-', item);
+    console.log('item stringify-', JSON.stringify(item));
 
-    setExpenses(...expenses, JSON.parse(item));
+    let stringifyValue = JSON.stringify(item);
+    let exportValue = { ...expenses, item };
+
+    // expenses['productName'] = expenseName;
+    // expenses['productPrice'] = expensePrice;
+
+    // let exportValue = JSON.stringify(expenses + item);
+
+    console.log(exportValue);
+
+    // setExpenses(exportValue);
   };
 
   return (
