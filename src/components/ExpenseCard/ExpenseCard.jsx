@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useReducer } from 'react';
 
 import './expenseCard.scss';
 
@@ -18,34 +18,35 @@ function ExpenseCard({ shopName, month, data }) {
     calcPrice += priceArray[i];
   }
 
+  //bad pattern, pasiteirauti ar cia eina kitaip kazkaip
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  function handleClick() {
+    forceUpdate();
+  }
+
   //adds expense element to expenses
   const [expenses, setExpenses] = useState(data);
 
+  //adds value to data, remaps expenses
   const addExpense = () => {
-    //get input items
-    let expenseName = document.getElementById('expenseName').value;
-    let expensePrice = document.getElementById('expensePrice').value;
+    let item = {
+      productName: String(document.getElementById('expenseName').value),
+      productPrice: Number(document.getElementById('expensePrice').value),
+    };
 
-    // let inputExpense = JSON.stringify(expenses);
+    //revert input values
+    document.getElementById('expenseName').value = '';
+    document.getElementById('expensePrice').value = '';
 
-    //TODO fix
-    //cant parse string to JSON
-    let item = `{ productName: ${expenseName}, productPrice: ${expensePrice} }`;
+    let exportValue = data;
 
-    console.log('item-', item);
-    console.log('item stringify-', JSON.stringify(item));
-
-    let stringifyValue = JSON.stringify(item);
-    let exportValue = { ...expenses, item };
-
-    // expenses['productName'] = expenseName;
-    // expenses['productPrice'] = expensePrice;
-
-    // let exportValue = JSON.stringify(expenses + item);
+    exportValue[exportValue.length] = item;
 
     console.log(exportValue);
 
-    // setExpenses(exportValue);
+    setExpenses(exportValue);
+    handleClick();
   };
 
   return (
@@ -100,7 +101,7 @@ function ExpenseCard({ shopName, month, data }) {
           </thead>
           <tbody>
             {expenses.map(({ productName, productPrice }) => (
-              <tr>
+              <tr key={productName}>
                 <td> {productName}</td>
                 <td> {productPrice}€</td>
               </tr>
