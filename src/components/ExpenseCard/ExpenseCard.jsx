@@ -1,4 +1,4 @@
-import React, { useContext, useState, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 
 import './expenseCard.scss';
 
@@ -9,13 +9,17 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 // import AddExpenseButton from '../AddExpenseButton/AddExpenseButton';
 
 function ExpenseCard({ shopName, month, data }) {
-  let calcPrice = 0;
-  let priceArray = [];
+  function calcPrice() {
+    let calcPrice = 0;
+    let priceArray = [];
 
-  data.map(({ productPrice }) => priceArray.push(productPrice));
+    data.map(({ productPrice }) => priceArray.push(productPrice));
 
-  for (let i = 0; i < priceArray.length; i++) {
-    calcPrice += priceArray[i];
+    for (let i = 0; i < priceArray.length; i++) {
+      calcPrice += priceArray[i];
+    }
+
+    return calcPrice;
   }
 
   //bad pattern, pasiteirauti ar cia eina kitaip kazkaip
@@ -90,7 +94,7 @@ function ExpenseCard({ shopName, month, data }) {
               Shop: {shopName}
             </th>
             <th scope="col" className="noBottomBorder">
-              Total: {calcPrice}€
+              Total: {calcPrice()}€
             </th>
           </tr>
           <tr>

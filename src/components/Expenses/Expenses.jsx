@@ -1,6 +1,8 @@
 import React from 'react';
 
 import './expenses.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 //mockData
 import mockReceiptData from '../../mockReceiptData';
@@ -10,7 +12,7 @@ import ExpenseCard from '../ExpenseCard/ExpenseCard';
 
 const mockData = mockReceiptData;
 
-function Receipts() {
+function Expenses() {
   return (
     <div className="receiptsPage">
       <div className="receiptsText mb-0 p-3">
@@ -50,9 +52,30 @@ function Receipts() {
             <h5>2023-May</h5>
           </div>
           <div className="receiptCard border p-3 rounded">
-            <div className="input-group ">
-              <input type="text" className="form-control" placeholder="year" />
-              <input type="text" className="form-control" placeholder="month" />
+            <div className="addButton">
+              <div className="input-group my-3 mb-3">
+                <input
+                  type="text"
+                  id="expenseName"
+                  className="form-control"
+                  placeholder="Year"
+                  aria-label="Year"
+                  aria-describedby="basic-addon2"
+                />
+                <input
+                  type="text"
+                  className="form-control"
+                  id="expensePrice"
+                  placeholder="Month"
+                  aria-label="Month"
+                  aria-describedby="basic-addon2"
+                />
+                <div className="input-group-append">
+                  <button className="btn btn-outline-secondary" type="submit">
+                    <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           {/* button to add new expense date on click
@@ -67,4 +90,4 @@ function Receipts() {
   );
 }
 
-export default Receipts;
+export default Expenses;
