@@ -51,65 +51,62 @@ function ExpenseCard({ shopName, month, data }) {
 
   return (
     <div className="expenseCard p-3 border rounded ">
-      <div className="expenseCardContents">
-        <table className="table">
-          <caption>
-            Expenses at {shopName} on {month}
-            <div className="addButton">
-              <div className="input-group my-3 mb-3">
-                <input
-                  type="text"
-                  id="expenseName"
-                  className="form-control"
-                  placeholder="Expense name"
-                  aria-label="Expense name"
-                  aria-describedby="basic-addon2"
-                />
-                <input
-                  type="text"
-                  className="form-control"
-                  id="expensePrice"
-                  placeholder="Price"
-                  aria-label="Price"
-                  aria-describedby="basic-addon2"
-                />
-                <div className="input-group-append">
-                  <button
-                    className="btn btn-outline-secondary"
-                    type="submit"
-                    onClick={addExpense}
-                  >
-                    <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
-                  </button>
-                </div>
+      <table className="table">
+        <caption>
+          Expenses at {shopName} on {month}
+          <div className="addButton">
+            <div className="input-group my-3 mb-3">
+              <input
+                type="text"
+                id="expenseName"
+                className="form-control"
+                placeholder="Expense name"
+                aria-label="Expense name"
+                aria-describedby="basic-addon2"
+              />
+              <input
+                type="text"
+                className="form-control"
+                id="expensePrice"
+                placeholder="Price"
+                aria-label="Price"
+                aria-describedby="basic-addon2"
+              />
+              <div className="input-group-append">
+                <button
+                  className="btn btn-outline-secondary"
+                  type="submit"
+                  onClick={addExpense}
+                >
+                  <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
+                </button>
               </div>
             </div>
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col" className="noBottomBorder">
-                Shop: {shopName}
-              </th>
-              <th scope="col" className="noBottomBorder">
-                Total: {calcPrice}€
-              </th>
+          </div>
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" className="noBottomBorder">
+              Shop: {shopName}
+            </th>
+            <th scope="col" className="noBottomBorder">
+              Total: {calcPrice}€
+            </th>
+          </tr>
+          <tr>
+            <th scope="col">Expense</th>
+            <th scope="col">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          {expenses.map(({ productName, productPrice }) => (
+            <tr key={productName}>
+              <td> {productName}</td>
+              <td> {productPrice}€</td>
             </tr>
-            <tr>
-              <th scope="col">Expense</th>
-              <th scope="col">Cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenses.map(({ productName, productPrice }) => (
-              <tr key={productName}>
-                <td> {productName}</td>
-                <td> {productPrice}€</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {/* <AddButton /> */}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
