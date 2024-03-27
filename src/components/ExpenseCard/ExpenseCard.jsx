@@ -34,6 +34,7 @@ function ExpenseCard({ shopName, month, data }) {
 
   //adds value to data, remaps expenses
   const addExpense = () => {
+    //perrasyt i useRef hooka
     let item = {
       productName: String(document.getElementById('expenseName').value),
       productPrice: Number(document.getElementById('expensePrice').value),
