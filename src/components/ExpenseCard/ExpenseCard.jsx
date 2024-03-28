@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useRef } from 'react';
 
 import './expenseCard.scss';
 
@@ -29,30 +29,29 @@ function ExpenseCard({ shopName, month, data }) {
     forceUpdate();
   }
 
-  //adds expense element to expenses
   const [expenses, setExpenses] = useState(data);
+  const expensePrice = useRef(null);
+  const expenseName = useRef(null);
 
-  //adds value to data, remaps expenses
-  const addExpense = () => {
-    //perrasyt i useRef hooka
+  function addExpense() {
+    console.log('------addExpense------');
+
+    console.log('Expense name-', expenseName.current.value);
+    console.log('Expense price-', expensePrice.current.value);
+
     let item = {
-      productName: String(document.getElementById('expenseName').value),
-      productPrice: Number(document.getElementById('expensePrice').value),
+      productName: String(expenseName.current.value),
+      productPrice: Number(expensePrice.current.value),
     };
-
-    //revert input values
-    document.getElementById('expenseName').value = '';
-    document.getElementById('expensePrice').value = '';
 
     let exportValue = data;
 
     exportValue[exportValue.length] = item;
 
-    console.log(exportValue);
-
+    // setExpenses({ ...expenses, item });
     setExpenses(exportValue);
     handleClick();
-  };
+  }
 
   return (
     <div className="expenseCard p-3 border rounded ">
@@ -63,8 +62,9 @@ function ExpenseCard({ shopName, month, data }) {
             <div className="input-group my-3 mb-3">
               <input
                 type="text"
-                id="expenseName"
                 className="form-control"
+                id="expenseName"
+                ref={expenseName}
                 placeholder="Expense name"
                 aria-label="Expense name"
                 aria-describedby="basic-addon2"
@@ -73,6 +73,7 @@ function ExpenseCard({ shopName, month, data }) {
                 type="text"
                 className="form-control"
                 id="expensePrice"
+                ref={expensePrice}
                 placeholder="Price"
                 aria-label="Price"
                 aria-describedby="basic-addon2"
