@@ -6,11 +6,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 //mockData
 import mockReceiptData from '../../mockReceiptData';
+import mockDateData from '../../mockDateData';
 
 //components
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
 
-const mockData = mockReceiptData;
+const mockExpenseData = mockReceiptData;
+const mockYearData = mockDateData;
 
 function Expenses() {
   return (
@@ -83,7 +85,11 @@ function Expenses() {
           option to add items */}
         </div>
         <div className="expensesBar w-50 my-3 me-3 p-1 border rounded">
-          <ExpenseCard shopName={'Maxima'} month={'May'} data={mockData} />
+          <ExpenseCard
+            shopName={'Maxima'}
+            month={'May'}
+            data={mockExpenseData}
+          />
         </div>
       </div>
     </div>
