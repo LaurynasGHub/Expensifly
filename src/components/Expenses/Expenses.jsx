@@ -1,18 +1,18 @@
 import React from 'react';
 
 import './expenses.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 //mockData
 import mockReceiptData from '../../mockReceiptData';
-import mockDateData from '../../mockDateData';
+// import mockDateData from '../../mockDateData';
 
 //components
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
+import ReceiptCard from '../ReceiptCard/ReceiptCard';
 
 const mockExpenseData = mockReceiptData;
-const mockYearData = mockDateData;
 
 function Expenses() {
   return (
@@ -50,7 +50,7 @@ function Expenses() {
       </div>
       <div className="expensesWindow">
         <div className="receiptsWindow w-50 my-3 ms-3 p-1 border rounded">
-          <div className="receiptCard border p-3 rounded">
+          {/* <div className="receiptCard border p-3 rounded">
             <h5>2023-May</h5>
           </div>
           <div className="receiptCard border p-3 rounded">
@@ -79,7 +79,8 @@ function Expenses() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+          <ReceiptCard />
           {/* button to add new expense date on click
           appears new window to insert date. then add empty expense bar with
           option to add items */}

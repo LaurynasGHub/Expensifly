@@ -1,0 +1,14 @@
+.dateButton {
+  border: none;
+  background-color: white;
+
+  text-decoration: underline 0.1rem rgb(217, 211, 211);
+
+  font-size: 1.5rem;
+}
+
+.receiptCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
