@@ -22,14 +22,8 @@ function ExpenseCard({ shopName, month, data }) {
     return calcPrice;
   }
 
-  //bad pattern, pasiteirauti ar cia eina kitaip kazkaip
-  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
-
-  function handleClick() {
-    forceUpdate();
-  }
-
   const [expenses, setExpenses] = useState(data);
+
   const expensePrice = useRef(null);
   const expenseName = useRef(null);
 
@@ -39,25 +33,24 @@ function ExpenseCard({ shopName, month, data }) {
     console.log('Expense name-', expenseName.current.value);
     console.log('Expense price-', expensePrice.current.value);
 
-    let item = {
-      productName: String(expenseName.current.value),
-      productPrice: Number(expensePrice.current.value),
-    };
-
-    let exportValue = data;
-
-    exportValue[exportValue.length] = item;
+    const newExpenses = [
+      ...expenses,
+      {
+        productName: String(expenseName.current.value),
+        productPrice: Number(expensePrice.current.value),
+      },
+    ];
 
     // setExpenses({ ...expenses, item });
-    setExpenses(exportValue);
-    handleClick();
+    setExpenses(newExpenses);
+    // handleClick();
   }
 
   return (
     <div className="expenseCard p-3 border rounded ">
       <table className="table">
-        <caption>
-          Expenses at {shopName} on {month}
+        <caption className="mt-2">
+          Add new expense
           <div className="addButton">
             <div className="input-group my-3 mb-3">
               <input
@@ -81,7 +74,7 @@ function ExpenseCard({ shopName, month, data }) {
               <div className="input-group-append">
                 <button
                   className="btn btn-outline-secondary"
-                  type="submit"
+                  type="button"
                   onClick={addExpense}
                 >
                   <FontAwesomeIcon className="buttonSvg" icon={faPlus} />

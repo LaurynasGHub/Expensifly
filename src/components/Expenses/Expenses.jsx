@@ -6,7 +6,7 @@ import './expenses.scss';
 
 //mockData
 import mockReceiptData from '../../mockReceiptData';
-// import mockDateData from '../../mockDateData';
+import mockDateData from '../../mockDateData';
 
 //components
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
@@ -80,7 +80,7 @@ function Expenses() {
               </div>
             </div>
           </div> */}
-          <ReceiptCard />
+          <ReceiptCard yearData={mockDateData} />
           {/* button to add new expense date on click
           appears new window to insert date. then add empty expense bar with
           option to add items */}
