@@ -2,16 +2,24 @@
   border: none;
   background-color: white;
 
-  text-decoration: underline 0.1rem rgb(217, 211, 211);
+  // text-decoration: underline 0.1rem rgb(219, 213, 213);
 
   font-size: 1.5rem;
 
   width: 100%;
   text-align: start;
+
+  &:hover {
+    text-decoration: underline 0.1rem rgb(85, 21, 21);
+  }
 }
 
 .receiptCard {
   //   display: flex;
   //   flex-direction: column;
   //   align-items: flex-start;
+}
+
+.inputErrorMessage {
+  color: red;
 }
