@@ -5,6 +5,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import './receiptCard.scss';
 
+import ExpenseCard from '../ExpenseCard/ExpenseCard';
+
+import mockReceiptData from '../../mockReceiptData';
+const mockExpenseData = mockReceiptData;
 //mock date data
 // import mockDateData from '../../mockDateData';
 // const mockYearData = mockDateData;
@@ -106,73 +110,83 @@ function ReceiptCard({ yearData }) {
   }
 
   return (
-    <div>
-      <div className="receiptCard border p-3 rounded">
-        {dates.map(({ year, month, day, shop }) => (
-          <button
-            key={`${year}${month}${day}${shop}`}
-            className="dateButton mb-1"
-          >
-            {year} - {month} - {day}
-            {dayOrdinalSwitch(day)} at "{shop}"
-          </button>
-        ))}
-      </div>
-      <div className="receiptCard border p-3 rounded">
-        <p>Add new date</p>
-        <div className="input-group my-3 mb-3">
-          <input
-            type="text"
-            id="year"
-            ref={year}
-            className="form-control"
-            placeholder="Year"
-            aria-label="Year"
-            aria-describedby="basic-addon2"
-          />
-          <input
-            type="text"
-            className="form-control"
-            id="month"
-            ref={month}
-            placeholder="Month"
-            aria-label="Month"
-            aria-describedby="basic-addon2"
-          />
-          <input
-            type="number"
-            className="form-control"
-            id="day"
-            ref={day}
-            placeholder="Day"
-            aria-label="Day"
-            aria-describedby="basic-addon3"
-          />
-          <input
-            type="text"
-            className="form-control"
-            id="shop"
-            ref={shop}
-            placeholder="Shop"
-            aria-label="Shop"
-            aria-describedby="basic-addon2"
-          />
-
-          <div className="input-group-append">
+    <div className="receiptCard">
+      <div className="receiptCardElement mx-3">
+        <div className=" border p-3 rounded">
+          {dates.map(({ year, month, day, shop }) => (
             <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={mapDateData}
+              key={`${year}${month}${day}${shop}`}
+              className="dateButton mb-1"
             >
-              <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
+              {year} - {month} - {day}
+              {dayOrdinalSwitch(day)} at "{shop}"
             </button>
-          </div>
+          ))}
         </div>
-        {!inputValidation ? (
-          <div className="inputErrorMessage">Date input is invalid!</div>
-        ) : (
-          <></>
-        )}
+        <div className=" border p-3 rounded">
+          <p>Add new date</p>
+          <div className="input-group my-3 mb-3">
+            <input
+              type="text"
+              id="year"
+              ref={year}
+              className="form-control"
+              placeholder="Year"
+              aria-label="Year"
+              aria-describedby="basic-addon2"
+            />
+            <input
+              type="text"
+              className="form-control"
+              id="month"
+              ref={month}
+              placeholder="Month"
+              aria-label="Month"
+              aria-describedby="basic-addon2"
+            />
+            <input
+              type="number"
+              className="form-control"
+              id="day"
+              ref={day}
+              placeholder="Day"
+              aria-label="Day"
+              aria-describedby="basic-addon3"
+            />
+            <input
+              type="text"
+              className="form-control"
+              id="shop"
+              ref={shop}
+              placeholder="Shop"
+              aria-label="Shop"
+              aria-describedby="basic-addon2"
+            />
+
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={mapDateData}
+              >
+                <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
+              </button>
+            </div>
+          </div>
+          {!inputValidation ? (
+            <div className="inputErrorMessage">Date input is invalid!</div>
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
+
+      <div className="receiptCardElement mx-3">
+        {/* add useState with mockExpenseData, that data is gathered
+        from backend. when button is clicked onClick function takes
+        button id and gathers data from backend with that id
+        then passes that data as a prop to the epense card */}
+        <ExpenseCard shopName={'Maxima'} month={'May'} data={mockExpenseData} />
       </div>
     </div>
   );

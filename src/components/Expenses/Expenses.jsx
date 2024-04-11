@@ -48,51 +48,7 @@ function Expenses() {
           </select>
         </div>
       </div>
-      <div className="expensesWindow">
-        <div className="receiptsWindow w-50 my-3 ms-3 p-1 border rounded">
-          {/* <div className="receiptCard border p-3 rounded">
-            <h5>2023-May</h5>
-          </div>
-          <div className="receiptCard border p-3 rounded">
-            <div className="addButton">
-              <div className="input-group my-3 mb-3">
-                <input
-                  type="text"
-                  id="expenseName"
-                  className="form-control"
-                  placeholder="Year"
-                  aria-label="Year"
-                  aria-describedby="basic-addon2"
-                />
-                <input
-                  type="text"
-                  className="form-control"
-                  id="expensePrice"
-                  placeholder="Month"
-                  aria-label="Month"
-                  aria-describedby="basic-addon2"
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-outline-secondary" type="submit">
-                    <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div> */}
-          <ReceiptCard yearData={mockDateData} />
-          {/* button to add new expense date on click
-          appears new window to insert date. then add empty expense bar with
-          option to add items */}
-        </div>
-        <div className="expensesBar w-50 my-3 me-3 p-1 border rounded">
-          <ExpenseCard
-            shopName={'Maxima'}
-            month={'May'}
-            data={mockExpenseData}
-          />
-        </div>
-      </div>
+      <ReceiptCard yearData={mockDateData} />
     </div>
   );
 }

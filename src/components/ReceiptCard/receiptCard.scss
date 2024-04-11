@@ -2,8 +2,6 @@
   border: none;
   background-color: white;
 
-  // text-decoration: underline 0.1rem rgb(219, 213, 213);
-
   font-size: 1.5rem;
 
   width: 100%;
@@ -12,14 +10,22 @@
   &:hover {
     text-decoration: underline 0.1rem rgb(85, 21, 21);
   }
+  &:focus {
+    text-decoration: underline 0.1rem rgb(85, 21, 21);
+  }
 }
 
 .receiptCard {
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: flex-start;
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-start;
 }
 
 .inputErrorMessage {
   color: red;
+}
+
+.receiptCardElement {
+  width: 50%;
 }

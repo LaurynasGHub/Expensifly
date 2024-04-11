@@ -1,6 +1,4 @@
 .receiptsPage {
-  .receiptsText {
-  }
   .filterOptions {
     display: flex;
     justify-content: flex-start;
@@ -10,28 +8,16 @@
         outline: none !important;
       }
     }
-    .filterByMonth {
-    }
-    .filterByYear {
-    }
 
     @media only screen and (max-width: 400px) {
       justify-content: space-around;
     }
   }
   .expensesWindow {
-    display: flex;
-
     .receiptsWindow {
       @media only screen and (max-width: 400px) {
         width: 100% !important;
         margin-right: 1rem !important;
-      }
-
-      .receiptCard {
-        input {
-          // border: none;
-        }
       }
     }
 
