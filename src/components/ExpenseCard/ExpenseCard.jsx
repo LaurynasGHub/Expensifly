@@ -22,6 +22,8 @@ function ExpenseCard({ shopName, month, data }) {
     return calcPrice;
   }
 
+  console.log('cardData-', data);
+
   const [expenses, setExpenses] = useState(data);
 
   const expensePrice = useRef(null);
@@ -99,7 +101,7 @@ function ExpenseCard({ shopName, month, data }) {
         </thead>
         <tbody>
           {expenses.map(({ productName, productPrice }) => (
-            <tr key={productName}>
+            <tr key={`${productName}${productPrice}`}>
               <td> {productName}</td>
               <td> {productPrice}€</td>
             </tr>

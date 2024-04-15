@@ -20,6 +20,12 @@
 
   display: flex;
   justify-content: flex-start;
+
+  & {
+    @media only screen and (max-width: 900px) {
+      flex-direction: column;
+    }
+  }
 }
 
 .inputErrorMessage {
@@ -28,4 +34,9 @@
 
 .receiptCardElement {
   width: 50%;
+  & {
+    @media only screen and (max-width: 900px) {
+      width: auto;
+    }
+  }
 }

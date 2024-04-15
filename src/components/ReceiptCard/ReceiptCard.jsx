@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 
+import Dropdown from 'react-bootstrap/Dropdown';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -7,15 +9,21 @@ import './receiptCard.scss';
 
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
 
-import mockReceiptData from '../../mockReceiptData';
+import dataWithoutId from '../../mockReceiptData_withoutId';
+
+// import mockReceiptData from '../../mockReceiptData';
+import mockReceiptData from '../../mockReceiptData_withoutId';
 const mockExpenseData = mockReceiptData;
-//mock date data
-// import mockDateData from '../../mockDateData';
-// const mockYearData = mockDateData;
+
+const mockDataWithoutId = dataWithoutId;
 
 function ReceiptCard({ yearData }) {
   const [dates, setDates] = useState(yearData);
   const [inputValidation, setInputValidation] = useState(true);
+  const [expenseData, setExpenseData] = useState(mockExpenseData);
+  //   let expenseData = mockExpenseData;
+
+  //   console.log('expenseData-', expenseData);
 
   const year = useRef(null);
   const month = useRef(null);
@@ -54,7 +62,7 @@ function ReceiptCard({ yearData }) {
       setInputValidation(false);
       return;
     }
-    //if months doesnt include dateMonth print log
+    //if months doesn't include dateMonth print log
     else if (!months.includes(dateMonth)) {
       console.log('month provided isn`t valid');
       setInputValidation(false);
@@ -82,6 +90,7 @@ function ReceiptCard({ yearData }) {
         shop: dateShop,
       },
     ];
+
     setDates(newDates);
   }
 
@@ -101,12 +110,54 @@ function ReceiptCard({ yearData }) {
     }
   }
 
+  function findElementById(data, id) {
+    if (!data) {
+      return null;
+    }
+
+    if (data.id === id) {
+      return data;
+    }
+
+    if (Array.isArray(data)) {
+      for (let i = 0; i < data.length; i++) {
+        const result = findElementById(data[i], id);
+        if (result) {
+          return result;
+        }
+      }
+    } else if (typeof obj === 'object') {
+      for (let key in dates) {
+        const result = findElementById(data[key], id);
+        if (result) {
+          return result;
+        }
+      }
+    }
+
+    return null;
+  }
+
   //function that is called onClick on date button
   //shows that specific date expenses
-  function showExpenseData() {
-    //get id that is combined from shop name and date
-    //get data by that id from backend/mock data
-    //display it on the right
+  function showExpenseData(expenseId, expenses) {
+    expenseId = '2023March2Rimi';
+    expenses = mockReceiptData;
+
+    console.log('expenseId-', expenseId);
+
+    console.log('expenses-', expenses);
+
+    const idData = findElementById(expenses, expenseId);
+    console.log('idData-', idData);
+
+    // const idExpenseData = findElementById(idData, 'data');
+    // console.log('expenseData-', idExpenseData);
+
+    // console.log('expenseData-i', idData['data']);
+
+    // setExpenseData(idData['data']);
+    setExpenseData(mockDataWithoutId);
   }
 
   return (
@@ -114,9 +165,12 @@ function ReceiptCard({ yearData }) {
       <div className="receiptCardElement mx-3">
         <div className=" border p-3 rounded">
           {dates.map(({ year, month, day, shop }) => (
+            // const key = `${year}${month}${day}${shop}`;
+
             <button
               key={`${year}${month}${day}${shop}`}
               className="dateButton mb-1"
+              onClick={showExpenseData}
             >
               {year} - {month} - {day}
               {dayOrdinalSwitch(day)} at "{shop}"
@@ -135,15 +189,26 @@ function ReceiptCard({ yearData }) {
               aria-label="Year"
               aria-describedby="basic-addon2"
             />
-            <input
-              type="text"
-              className="form-control"
+
+            <select
               id="month"
               ref={month}
-              placeholder="Month"
-              aria-label="Month"
-              aria-describedby="basic-addon2"
-            />
+              name="month"
+              className="form-control"
+            >
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="8August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
             <input
               type="number"
               className="form-control"
@@ -185,8 +250,8 @@ function ReceiptCard({ yearData }) {
         {/* add useState with mockExpenseData, that data is gathered
         from backend. when button is clicked onClick function takes
         button id and gathers data from backend with that id
-        then passes that data as a prop to the epense card */}
-        <ExpenseCard shopName={'Maxima'} month={'May'} data={mockExpenseData} />
+        then passes that data as a prop to the expense card */}
+        <ExpenseCard shopName={'Maxima'} month={'May'} data={expenseData} />
       </div>
     </div>
   );
