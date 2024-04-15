@@ -5,9 +5,6 @@ import './expenseCard.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-//components
-// import AddExpenseButton from '../AddExpenseButton/AddExpenseButton';
-
 function ExpenseCard({ shopName, month, data }) {
   function calcPrice() {
     let calcPrice = 0;
@@ -21,8 +18,6 @@ function ExpenseCard({ shopName, month, data }) {
 
     return calcPrice;
   }
-
-  console.log('cardData-', data);
 
   const [expenses, setExpenses] = useState(data);
 
@@ -43,9 +38,7 @@ function ExpenseCard({ shopName, month, data }) {
       },
     ];
 
-    // setExpenses({ ...expenses, item });
     setExpenses(newExpenses);
-    // handleClick();
   }
 
   return (

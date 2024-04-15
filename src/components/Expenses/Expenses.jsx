@@ -1,18 +1,12 @@
 import React from 'react';
 
 import './expenses.scss';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
-//mockData
-import mockReceiptData from '../../mockReceiptData';
-import mockDateData from '../../mockDateData';
 
 //components
-import ExpenseCard from '../ExpenseCard/ExpenseCard';
 import ReceiptCard from '../ReceiptCard/ReceiptCard';
 
-const mockExpenseData = mockReceiptData;
+//mockData
+import mockDateData from '../../mockDateData';
 
 function Expenses() {
   return (

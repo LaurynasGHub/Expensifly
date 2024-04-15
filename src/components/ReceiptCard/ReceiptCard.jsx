@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 
-import Dropdown from 'react-bootstrap/Dropdown';
+import { findJsonElement } from '../../utils/findJsonElementUtil';
+import { dayOrdinal } from '../../utils/dayOrdinalUtil';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -9,48 +10,27 @@ import './receiptCard.scss';
 
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
 
-import dataWithoutId from '../../mockReceiptData_withoutId';
-
-// import mockReceiptData from '../../mockReceiptData';
+import mockReceiptDataWithId from '../../mockReceiptData';
 import mockReceiptData from '../../mockReceiptData_withoutId';
 const mockExpenseData = mockReceiptData;
-
-const mockDataWithoutId = dataWithoutId;
+const mockExpenseIdData = mockReceiptDataWithId;
 
 function ReceiptCard({ yearData }) {
   const [dates, setDates] = useState(yearData);
   const [inputValidation, setInputValidation] = useState(true);
   const [expenseData, setExpenseData] = useState(mockExpenseData);
-  //   let expenseData = mockExpenseData;
-
-  //   console.log('expenseData-', expenseData);
 
   const year = useRef(null);
   const month = useRef(null);
   const day = useRef(null);
   const shop = useRef(null);
 
-  function mapDateData() {
+  function addNewDate() {
     setInputValidation(true);
     const dateYear = Number(year.current.value);
     const dateMonth = String(month.current.value);
     const dateDay = Number(day.current.value);
     const dateShop = String(shop.current.value);
-
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
 
     function isNumber(value) {
       return typeof value === 'number' && !isNaN(value);
@@ -59,12 +39,6 @@ function ReceiptCard({ yearData }) {
     //if date is NOT a number then print log
     if (!isNumber(dateYear) || dateYear === 0) {
       console.log('date provided is not valid');
-      setInputValidation(false);
-      return;
-    }
-    //if months doesn't include dateMonth print log
-    else if (!months.includes(dateMonth)) {
-      console.log('month provided isn`t valid');
       setInputValidation(false);
       return;
     }
@@ -94,70 +68,17 @@ function ReceiptCard({ yearData }) {
     setDates(newDates);
   }
 
-  function dayOrdinalSwitch(dayNo) {
-    switch (dayNo) {
-      case 1:
-        return 'st';
+  function showExpenseData() {
+    console.log('----showExpenseData----');
 
-      case 2:
-        return 'nd';
+    const foundData = findJsonElement(mockExpenseIdData, '2023March2Rimi');
+    console.log('foundData-', foundData);
 
-      case 3:
-        return 'rd';
+    const newExpenses = foundData['data'];
+    console.log('foundDataData-', newExpenses);
 
-      default:
-        return 'th';
-    }
-  }
-
-  function findElementById(data, id) {
-    if (!data) {
-      return null;
-    }
-
-    if (data.id === id) {
-      return data;
-    }
-
-    if (Array.isArray(data)) {
-      for (let i = 0; i < data.length; i++) {
-        const result = findElementById(data[i], id);
-        if (result) {
-          return result;
-        }
-      }
-    } else if (typeof obj === 'object') {
-      for (let key in dates) {
-        const result = findElementById(data[key], id);
-        if (result) {
-          return result;
-        }
-      }
-    }
-
-    return null;
-  }
-
-  //function that is called onClick on date button
-  //shows that specific date expenses
-  function showExpenseData(expenseId, expenses) {
-    expenseId = '2023March2Rimi';
-    expenses = mockReceiptData;
-
-    console.log('expenseId-', expenseId);
-
-    console.log('expenses-', expenses);
-
-    const idData = findElementById(expenses, expenseId);
-    console.log('idData-', idData);
-
-    // const idExpenseData = findElementById(idData, 'data');
-    // console.log('expenseData-', idExpenseData);
-
-    // console.log('expenseData-i', idData['data']);
-
-    // setExpenseData(idData['data']);
-    setExpenseData(mockDataWithoutId);
+    //when setting data it just updates prices, doesn't remap
+    setExpenseData(newExpenses);
   }
 
   return (
@@ -165,15 +86,13 @@ function ReceiptCard({ yearData }) {
       <div className="receiptCardElement mx-3">
         <div className=" border p-3 rounded">
           {dates.map(({ year, month, day, shop }) => (
-            // const key = `${year}${month}${day}${shop}`;
-
             <button
               key={`${year}${month}${day}${shop}`}
               className="dateButton mb-1"
               onClick={showExpenseData}
             >
               {year} - {month} - {day}
-              {dayOrdinalSwitch(day)} at "{shop}"
+              {dayOrdinal(day)} at "{shop}"
             </button>
           ))}
         </div>
@@ -232,7 +151,7 @@ function ReceiptCard({ yearData }) {
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={mapDateData}
+                onClick={addNewDate}
               >
                 <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
               </button>
