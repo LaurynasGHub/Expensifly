@@ -10,15 +10,15 @@ import './receiptCard.scss';
 
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
 
-import mockReceiptDataWithId from '../../mockReceiptData';
-import mockReceiptData from '../../mockReceiptData_withoutId';
-const mockExpenseData = mockReceiptData;
-const mockExpenseIdData = mockReceiptDataWithId;
+// import mockReceiptDataWithId from '../../mockReceiptData';
+// import mockReceiptData from '../../mockReceiptData_withoutId';
+// const mockExpenseData = mockReceiptData;
+// const mockExpenseIdData = mockReceiptDataWithId;
 
 function ReceiptCard({ yearData }) {
   const [dates, setDates] = useState(yearData);
   const [inputValidation, setInputValidation] = useState(true);
-  const [expenseData, setExpenseData] = useState(mockExpenseData);
+  const [expenseData, setExpenseData] = useState([]);
 
   const year = useRef(null);
   const month = useRef(null);
@@ -68,16 +68,15 @@ function ReceiptCard({ yearData }) {
     setDates(newDates);
   }
 
-  function showExpenseData() {
+  function showExpenseData(id) {
     console.log('----showExpenseData----');
 
-    const foundData = findJsonElement(mockExpenseIdData, '2023March2Rimi');
+    const foundData = findJsonElement([], id);
     console.log('foundData-', foundData);
 
     const newExpenses = foundData['data'];
     console.log('foundDataData-', newExpenses);
 
-    //when setting data it just updates prices, doesn't remap
     setExpenseData(newExpenses);
   }
 
@@ -89,7 +88,9 @@ function ReceiptCard({ yearData }) {
             <button
               key={`${year}${month}${day}${shop}`}
               className="dateButton mb-1"
-              onClick={showExpenseData}
+              onClick={() => {
+                showExpenseData(`${year}${month}${day}${shop}`);
+              }}
             >
               {year} - {month} - {day}
               {dayOrdinal(day)} at "{shop}"
@@ -166,11 +167,13 @@ function ReceiptCard({ yearData }) {
       </div>
 
       <div className="receiptCardElement mx-3">
-        {/* add useState with mockExpenseData, that data is gathered
-        from backend. when button is clicked onClick function takes
-        button id and gathers data from backend with that id
-        then passes that data as a prop to the expense card */}
-        <ExpenseCard shopName={'Maxima'} month={'May'} data={expenseData} />
+        {/* should show shopname,month,day,shop etc. more filters */}
+        <ExpenseCard
+          shopName={'Maxima'}
+          month={'May'}
+          data={expenseData}
+          setData={setExpenseData}
+        />
       </div>
     </div>
   );

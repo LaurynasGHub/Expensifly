@@ -5,7 +5,7 @@ import './expenseCard.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-function ExpenseCard({ shopName, month, data }) {
+function ExpenseCard({ shopName, month, data, setData }) {
   function calcPrice() {
     let calcPrice = 0;
     let priceArray = [];
@@ -19,8 +19,6 @@ function ExpenseCard({ shopName, month, data }) {
     return calcPrice;
   }
 
-  const [expenses, setExpenses] = useState(data);
-
   const expensePrice = useRef(null);
   const expenseName = useRef(null);
 
@@ -31,14 +29,14 @@ function ExpenseCard({ shopName, month, data }) {
     console.log('Expense price-', expensePrice.current.value);
 
     const newExpenses = [
-      ...expenses,
+      ...data,
       {
         productName: String(expenseName.current.value),
         productPrice: Number(expensePrice.current.value),
       },
     ];
 
-    setExpenses(newExpenses);
+    setData(newExpenses);
   }
 
   return (
@@ -93,7 +91,7 @@ function ExpenseCard({ shopName, month, data }) {
           </tr>
         </thead>
         <tbody>
-          {expenses.map(({ productName, productPrice }) => (
+          {data.map(({ productName, productPrice }) => (
             <tr key={`${productName}${productPrice}`}>
               <td> {productName}</td>
               <td> {productPrice}€</td>

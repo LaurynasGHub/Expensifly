@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.scss';
 
@@ -10,6 +10,10 @@ import CurrentPrices from './components/CurrentPrices/CurrentPrices';
 import Expenses from './components/Expenses/Expenses';
 import User from './components/User/User';
 
+//TODO
+//change default opening path, now opens to empty window
+//expenseCard doesn't rerender expenses
+
 function App() {
   return (
     <>
@@ -19,6 +23,7 @@ function App() {
         <Route path="/budget" element={<Budget />} />
         <Route path="/current-prices" element={<CurrentPrices />} />
         <Route path="/user" element={<User />} />
+        <Route path="*" element={<Navigate to="/expenses" />} />
       </Routes>
     </>
   );
