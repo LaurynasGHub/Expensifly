@@ -19,26 +19,6 @@ function ExpenseCard({ shopName, month, data, setData }) {
     return calcPrice;
   }
 
-  const expensePrice = useRef(null);
-  const expenseName = useRef(null);
-
-  function addExpense() {
-    console.log('------addExpense------');
-
-    console.log('Expense name-', expenseName.current.value);
-    console.log('Expense price-', expensePrice.current.value);
-
-    const newExpenses = [
-      ...data,
-      {
-        productName: String(expenseName.current.value),
-        productPrice: Number(expensePrice.current.value),
-      },
-    ];
-
-    setData(newExpenses);
-  }
-
   return (
     <div className="expenseCard p-3 border rounded ">
       <table className="table">
@@ -50,25 +30,67 @@ function ExpenseCard({ shopName, month, data, setData }) {
                 type="text"
                 className="form-control"
                 id="expenseName"
-                ref={expenseName}
+                // ref={expenseName}
                 placeholder="Expense name"
                 aria-label="Expense name"
                 aria-describedby="basic-addon2"
               />
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="expensePrice"
-                ref={expensePrice}
+                // ref={expensePrice}
                 placeholder="Price"
                 aria-label="Price"
+                aria-describedby="basic-addon2"
+              />
+              <input
+                type="text"
+                className="form-control"
+                id="expenseShop"
+                // ref={expenseName}
+                placeholder="Shop"
+                aria-label="Shop"
+                aria-describedby="basic-addon2"
+              />
+              <input
+                type="number"
+                className="form-control"
+                id="expenseDay"
+                // ref={expensePrice}
+                placeholder="Day"
+                aria-label="Day"
+                aria-describedby="basic-addon2"
+              />
+              <select id="month" name="expenseMonth" className="form-control">
+                <option value="December">Month</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="8August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+              <input
+                type="number"
+                className="form-control"
+                id="expenseYear"
+                // ref={expensePrice}
+                placeholder="Year"
+                aria-label="Year"
                 aria-describedby="basic-addon2"
               />
               <div className="input-group-append">
                 <button
                   className="btn btn-outline-secondary"
                   type="button"
-                  onClick={addExpense}
+                  // onClick={addExpense}
                 >
                   <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
                 </button>
@@ -78,16 +100,12 @@ function ExpenseCard({ shopName, month, data, setData }) {
         </caption>
         <thead>
           <tr>
-            <th scope="col" className="noBottomBorder">
-              Shop: {shopName}
-            </th>
-            <th scope="col" className="noBottomBorder">
-              Total: {calcPrice()}€
-            </th>
-          </tr>
-          <tr>
             <th scope="col">Expense</th>
             <th scope="col">Cost</th>
+            <th scope="col">Shop</th>
+            <th scope="col">Day</th>
+            <th scope="col">Month</th>
+            <th scope="col">Year</th>
           </tr>
         </thead>
         <tbody>
@@ -99,6 +117,11 @@ function ExpenseCard({ shopName, month, data, setData }) {
           ))}
         </tbody>
       </table>
+      <tr>
+        <th scope="col" className="noBottomBorder">
+          Total price of the items: {calcPrice()}€
+        </th>
+      </tr>
     </div>
   );
 }

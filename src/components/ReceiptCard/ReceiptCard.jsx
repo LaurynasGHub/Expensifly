@@ -1,19 +1,15 @@
 import React, { useRef, useState } from 'react';
 
-import { findJsonElement } from '../../utils/findJsonElementUtil';
+// import { findJsonElement } from '../../utils/findJsonElementUtil';
 import { dayOrdinal } from '../../utils/dayOrdinalUtil';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import './receiptCard.scss';
 
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
-
-// import mockReceiptDataWithId from '../../mockReceiptData';
-// import mockReceiptData from '../../mockReceiptData_withoutId';
-// const mockExpenseData = mockReceiptData;
-// const mockExpenseIdData = mockReceiptDataWithId;
 
 function ReceiptCard({ yearData }) {
   const [dates, setDates] = useState(yearData);
@@ -71,98 +67,67 @@ function ReceiptCard({ yearData }) {
   function showExpenseData(id) {
     console.log('----showExpenseData----');
 
-    const foundData = findJsonElement([], id);
-    console.log('foundData-', foundData);
-
-    const newExpenses = foundData['data'];
-    console.log('foundDataData-', newExpenses);
-
-    setExpenseData(newExpenses);
+    // setExpenseData(newExpenses);
   }
 
   return (
     <div className="receiptCard">
-      <div className="receiptCardElement mx-3">
-        <div className=" border p-3 rounded">
-          {dates.map(({ year, month, day, shop }) => (
+      <div className="searchBar">
+        <div className="input-group p-3">
+          {/* <p>Enter search parameters</p> */}
+          <input
+            type="text"
+            id="year"
+            ref={year}
+            className="form-control"
+            placeholder="Year"
+            aria-label="Year"
+            aria-describedby="basic-addon2"
+          />
+
+          <select id="month" ref={month} name="month" className="form-control">
+            <option value="December">Month</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="8August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
+          <input
+            type="number"
+            className="form-control"
+            id="day"
+            ref={day}
+            placeholder="Day"
+            aria-label="Day"
+            aria-describedby="basic-addon3"
+          />
+          <input
+            type="text"
+            className="form-control"
+            id="shop"
+            ref={shop}
+            placeholder="Shop"
+            aria-label="Shop"
+            aria-describedby="basic-addon2"
+          />
+
+          <div className="input-group-append">
             <button
-              key={`${year}${month}${day}${shop}`}
-              className="dateButton mb-1"
-              onClick={() => {
-                showExpenseData(`${year}${month}${day}${shop}`);
-              }}
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={addNewDate}
             >
-              {year} - {month} - {day}
-              {dayOrdinal(day)} at "{shop}"
+              <FontAwesomeIcon className="buttonSvg" icon={faMagnifyingGlass} />
             </button>
-          ))}
-        </div>
-        <div className=" border p-3 rounded">
-          <p>Add new date</p>
-          <div className="input-group my-3 mb-3">
-            <input
-              type="text"
-              id="year"
-              ref={year}
-              className="form-control"
-              placeholder="Year"
-              aria-label="Year"
-              aria-describedby="basic-addon2"
-            />
-
-            <select
-              id="month"
-              ref={month}
-              name="month"
-              className="form-control"
-            >
-              <option value="January">January</option>
-              <option value="February">February</option>
-              <option value="March">March</option>
-              <option value="April">April</option>
-              <option value="May">May</option>
-              <option value="June">June</option>
-              <option value="July">July</option>
-              <option value="8August">August</option>
-              <option value="September">September</option>
-              <option value="October">October</option>
-              <option value="November">November</option>
-              <option value="December">December</option>
-            </select>
-            <input
-              type="number"
-              className="form-control"
-              id="day"
-              ref={day}
-              placeholder="Day"
-              aria-label="Day"
-              aria-describedby="basic-addon3"
-            />
-            <input
-              type="text"
-              className="form-control"
-              id="shop"
-              ref={shop}
-              placeholder="Shop"
-              aria-label="Shop"
-              aria-describedby="basic-addon2"
-            />
-
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={addNewDate}
-              >
-                <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
-              </button>
-            </div>
           </div>
-          {!inputValidation ? (
-            <div className="inputErrorMessage">Date input is invalid!</div>
-          ) : (
-            <></>
-          )}
         </div>
       </div>
 

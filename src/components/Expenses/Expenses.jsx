@@ -5,9 +5,6 @@ import './expenses.scss';
 //components
 import ReceiptCard from '../ReceiptCard/ReceiptCard';
 
-//mockData
-import mockDateData from '../../mockDateData';
-
 function Expenses() {
   return (
     <div className="receiptsPage">
@@ -19,30 +16,8 @@ function Expenses() {
           other expenses that You add.
         </p>
       </div>
-      <div className="filterOptions p-3">
-        <div className="filterByMonth">
-          <select
-            className="form-select form-select-sm shadow-none form-control"
-            aria-label=".form-select-sm example"
-          >
-            <option>Select month</option>
-            <option value="1">Jan</option>
-            <option value="2">Feb</option>
-            <option value="3">March</option>
-          </select>
-        </div>
-        <div className="filterByYear ps-3">
-          <select
-            className="form-select form-select-sm shadow-none form-control"
-            aria-label=".form-select-sm example"
-          >
-            <option>Select year</option>
-            <option value="1">2023</option>
-            <option value="2">2024</option>
-          </select>
-        </div>
-      </div>
-      <ReceiptCard yearData={mockDateData} />
+
+      <ReceiptCard yearData={[]} />
     </div>
   );
 }
