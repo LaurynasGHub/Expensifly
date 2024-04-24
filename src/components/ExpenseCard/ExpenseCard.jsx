@@ -2,6 +2,9 @@ import React, { useState, useReducer, useRef, useContext } from 'react';
 
 import './expenseCard.scss';
 
+//utils
+import { dayOrdinal } from '../../utils/dayOrdinalUtil';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AppContext } from '../../context/appContext';
@@ -9,23 +12,39 @@ import { AppContext } from '../../context/appContext';
 function ExpenseCard() {
   const { data } = useContext(AppContext);
 
+  const expenseName = useRef();
+  const expensePrice = useRef();
+  const expenseShop = useRef();
+  const expenseDay = useRef();
+  const expenseMonth = useRef();
+  const expenseYear = useRef();
+
   function calcPrice() {
     let calcPrice = 0;
     let priceArray = [];
 
-    data.map(({ productPrice }) => priceArray.push(productPrice));
+    data.map((item) => priceArray.push(item.price));
 
     for (let i = 0; i < priceArray.length; i++) {
       calcPrice += priceArray[i];
     }
 
-    return calcPrice;
+    return calcPrice.toFixed(2);
+  }
+
+  //function to add expense to the database
+  function addExpense() {
+    console.log('Add expense');
+
+    //get all the necessary data
+    //connect to backend
+    //create new expense and post it to backend
   }
 
   return (
     <div className="expenseCard p-3 border rounded ">
       <table className="table">
-        <caption className="mt-2">
+        <caption className="ms-2 mt-2">
           Add new expense
           <div className="addButton">
             <div className="input-group my-3 mb-3">
@@ -33,7 +52,7 @@ function ExpenseCard() {
                 type="text"
                 className="form-control"
                 id="expenseName"
-                // ref={expenseName}
+                ref={expenseName}
                 placeholder="Expense name"
                 aria-label="Expense name"
                 aria-describedby="basic-addon2"
@@ -42,7 +61,7 @@ function ExpenseCard() {
                 type="number"
                 className="form-control"
                 id="expensePrice"
-                // ref={expensePrice}
+                ref={expensePrice}
                 placeholder="Price"
                 aria-label="Price"
                 aria-describedby="basic-addon2"
@@ -51,7 +70,7 @@ function ExpenseCard() {
                 type="text"
                 className="form-control"
                 id="expenseShop"
-                // ref={expenseName}
+                ref={expenseShop}
                 placeholder="Shop"
                 aria-label="Shop"
                 aria-describedby="basic-addon2"
@@ -60,12 +79,17 @@ function ExpenseCard() {
                 type="number"
                 className="form-control"
                 id="expenseDay"
-                // ref={expensePrice}
+                ref={expenseDay}
                 placeholder="Day"
                 aria-label="Day"
                 aria-describedby="basic-addon2"
               />
-              <select id="month" name="expenseMonth" className="form-control">
+              <select
+                id="month"
+                name="expenseMonth"
+                className="form-control"
+                ref={expenseMonth}
+              >
                 <option value="December">Month</option>
                 <option value="January">January</option>
                 <option value="February">February</option>
@@ -84,7 +108,7 @@ function ExpenseCard() {
                 type="number"
                 className="form-control"
                 id="expenseYear"
-                // ref={expensePrice}
+                ref={expenseYear}
                 placeholder="Year"
                 aria-label="Year"
                 aria-describedby="basic-addon2"
@@ -93,7 +117,7 @@ function ExpenseCard() {
                 <button
                   className="btn btn-outline-secondary"
                   type="button"
-                  // onClick={addExpense}
+                  onClick={addExpense}
                 >
                   <FontAwesomeIcon className="buttonSvg" icon={faPlus} />
                 </button>
@@ -116,12 +140,16 @@ function ExpenseCard() {
             <tr key={`${item.title}${item.price}`}>
               <td> {item.title}</td>
               <td> {item.price}€</td>
+              <td> {item.shop}</td>
+              <td> {`${item.day}${dayOrdinal(item.day)}`}</td>
+              <td> {item.month}</td>
+              <td> {item.year}</td>
             </tr>
           ))}
         </tbody>
         <tbody>
           <tr>
-            <th scope="col" className="noBottomBorder">
+            <th scope="col" className="noBottomBorder pt-3">
               Total price of the items: {calcPrice()}€
             </th>
           </tr>

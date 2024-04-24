@@ -23,7 +23,7 @@ function AppContextProvider(props) {
       console.log('response-', response);
 
       //set expenses to fetched data, convert it to json
-      const expenses = await response.json;
+      const expenses = await response.json();
 
       console.log('data', expenses);
 
