@@ -1,11 +1,14 @@
-import React, { useState, useReducer, useRef } from 'react';
+import React, { useState, useReducer, useRef, useContext } from 'react';
 
 import './expenseCard.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { AppContext } from '../../context/appContext';
 
-function ExpenseCard({ shopName, month, data, setData }) {
+function ExpenseCard() {
+  const { data } = useContext(AppContext);
+
   function calcPrice() {
     let calcPrice = 0;
     let priceArray = [];
@@ -109,19 +112,21 @@ function ExpenseCard({ shopName, month, data, setData }) {
           </tr>
         </thead>
         <tbody>
-          {data.map(({ productName, productPrice }) => (
-            <tr key={`${productName}${productPrice}`}>
-              <td> {productName}</td>
-              <td> {productPrice}€</td>
+          {data.map((item) => (
+            <tr key={`${item.title}${item.price}`}>
+              <td> {item.title}</td>
+              <td> {item.price}€</td>
             </tr>
           ))}
         </tbody>
+        <tbody>
+          <tr>
+            <th scope="col" className="noBottomBorder">
+              Total price of the items: {calcPrice()}€
+            </th>
+          </tr>
+        </tbody>
       </table>
-      <tr>
-        <th scope="col" className="noBottomBorder">
-          Total price of the items: {calcPrice()}€
-        </th>
-      </tr>
     </div>
   );
 }

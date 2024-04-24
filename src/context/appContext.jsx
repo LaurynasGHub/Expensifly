@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 import { cfg } from '../cfg/cfg';
 
@@ -6,6 +6,9 @@ export const AppContext = createContext();
 
 function AppContextProvider(props) {
   const [loadingExpenses, setLoadingExpenses] = useState(false);
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem('expensesData')) || []
+  );
 
   //fetch expense data from the server
   const fetchData = async () => {
@@ -23,6 +26,8 @@ function AppContextProvider(props) {
       const expenses = await response.json;
 
       console.log('data', expenses);
+
+      setData(expenses);
     } catch (error) {
       console.log('error', error.message);
     } finally {
@@ -30,5 +35,19 @@ function AppContextProvider(props) {
     }
   };
 
-  return <AppContext.Provider value={{}}>{props.children}</AppContext.Provider>;
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  //   useEffect(() => {
+  //     // console.log('AppContextProvider useEffect');
+  //     // localStorage.setItem('data', JSON.stringify(data));
+  //     localStorage.setItem('expensesData', JSON.stringify(expensesData));
+  //   }, [expensesData]);
+
+  return (
+    <AppContext.Provider value={{ data }}>{props.children}</AppContext.Provider>
+  );
 }
+
+export default AppContextProvider;
