@@ -1,5 +1,7 @@
 import React, { useState, useReducer, useRef, useContext } from 'react';
 
+import { cfg } from '../../cfg/cfg';
+
 import './expenseCard.scss';
 
 //utils
@@ -11,6 +13,8 @@ import { AppContext } from '../../context/appContext';
 
 function ExpenseCard() {
   const { data } = useContext(AppContext);
+
+  const [expenseData, setExpenseData] = useState(data);
 
   const expenseName = useRef();
   const expensePrice = useRef();
@@ -33,12 +37,34 @@ function ExpenseCard() {
   }
 
   //function to add expense to the database
-  function addExpense() {
+  async function addExpense() {
     console.log('Add expense');
 
-    //get all the necessary data
-    //connect to backend
-    //create new expense and post it to backend
+    //set data
+    const newExpense = {
+      title: expenseName.current,
+      price: expensePrice.current,
+      year: expenseYear.current,
+      month: expenseMonth.current,
+      day: expenseDay.current,
+      shop: expenseShop.current,
+    };
+
+    //post new data to backend
+    const response = await fetch(`${cfg.API.HOST}/expenses`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'Application/json',
+
+        // Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(newExpense),
+    });
+
+    console.log(response);
+
+    //update data
+    setExpenseData({ ...expenseData, newExpense });
   }
 
   return (
