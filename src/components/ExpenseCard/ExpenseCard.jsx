@@ -8,13 +8,13 @@ import './expenseCard.scss';
 import { dayOrdinal } from '../../utils/dayOrdinalUtil';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { AppContext } from '../../context/appContext';
 
 function ExpenseCard() {
-  const { data } = useContext(AppContext);
+  const { data, setData } = useContext(AppContext);
 
-  const [expenseData, setExpenseData] = useState(data);
+  const [searchValue, setSearchValue] = useState('');
 
   const expenseName = useRef();
   const expensePrice = useRef();
@@ -27,7 +27,12 @@ function ExpenseCard() {
     let calcPrice = 0;
     let priceArray = [];
 
-    data.map((item) => priceArray.push(item.price));
+    data
+      .filter((item) => {
+        return item.title.toLowerCase().includes(searchValue.toLowerCase());
+      })
+
+      .map((item) => priceArray.push(parseFloat(item.price)));
 
     for (let i = 0; i < priceArray.length; i++) {
       calcPrice += priceArray[i];
@@ -38,37 +43,106 @@ function ExpenseCard() {
 
   //function to add expense to the database
   async function addExpense() {
-    console.log('Add expense');
+    try {
+      console.log('Add expense');
 
-    //set data
-    const newExpense = {
-      title: expenseName.current,
-      price: expensePrice.current,
-      year: expenseYear.current,
-      month: expenseMonth.current,
-      day: expenseDay.current,
-      shop: expenseShop.current,
-    };
+      const title = expenseName.current.value;
+      const price = expensePrice.current.value;
+      const year = expenseYear.current.value;
+      const month = expenseMonth.current.value;
+      const day = expenseDay.current.value;
+      const shop = expenseShop.current.value;
 
-    //post new data to backend
-    const response = await fetch(`${cfg.API.HOST}/expenses`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'Application/json',
+      //set data
+      const newExpense = {
+        title,
+        price,
+        year,
+        month,
+        day,
+        shop,
+      };
 
-        // Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(newExpense),
-    });
+      //post new data to backend
+      const response = await fetch(`${cfg.API.HOST}/expenses`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'Application/json',
+        },
 
-    console.log(response);
+        body: JSON.stringify(newExpense),
+      });
+      console.log('response-', response);
 
-    //update data
-    setExpenseData({ ...expenseData, newExpense });
+      //update data in the database
+      setData([...data, newExpense]);
+    } catch (error) {
+      console.log('ERROR', error);
+    }
   }
 
   return (
     <div className="expenseCard p-3 border rounded ">
+      <div className="searchBar">
+        <div className="input-group py-3">
+          {/* <p>Enter search parameters</p> */}
+          <input
+            type="text"
+            id="year"
+            className="form-control"
+            placeholder="Title"
+            aria-label="Title"
+            aria-describedby="basic-addon2"
+            value={searchValue}
+            onChange={(e) => {
+              setSearchValue(e.target.value.toLowerCase());
+            }}
+          />
+
+          <select
+            id="month"
+            name="month"
+            className="form-control"
+            placeholder="Month"
+          >
+            <option value="December">Month</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="8August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
+          <input
+            type="number"
+            className="form-control"
+            id="day"
+            placeholder="Day"
+            aria-label="Day"
+            aria-describedby="basic-addon3"
+          />
+          <input
+            type="text"
+            className="form-control"
+            id="shop"
+            placeholder="Shop"
+            aria-label="Shop"
+            aria-describedby="basic-addon2"
+          />
+
+          {/* <div className="input-group-append"> */}
+          <button className="btn btn-outline-secondary" type="button">
+            <FontAwesomeIcon className="buttonSvg" icon={faMagnifyingGlass} />
+          </button>
+          {/* </div> */}
+        </div>
+      </div>
       <table className="table">
         <caption className="ms-2 mt-2">
           Add new expense
@@ -162,21 +236,27 @@ function ExpenseCard() {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
-            <tr key={`${item.title}${item.price}`}>
-              <td> {item.title}</td>
-              <td> {item.price}€</td>
-              <td> {item.shop}</td>
-              <td> {`${item.day}${dayOrdinal(item.day)}`}</td>
-              <td> {item.month}</td>
-              <td> {item.year}</td>
-            </tr>
-          ))}
+          {data
+            .filter((item) => {
+              return item.title
+                .toLowerCase()
+                .includes(searchValue.toLowerCase());
+            })
+            .map((item) => (
+              <tr key={`${item.title}${item.price}`}>
+                <td> {item.title}</td>
+                <td> {item.price}€</td>
+                <td> {item.shop}</td>
+                <td> {`${item.day}${dayOrdinal(item.day)}`}</td>
+                <td> {item.month}</td>
+                <td> {item.year}</td>
+              </tr>
+            ))}
         </tbody>
         <tbody>
           <tr>
             <th scope="col" className="noBottomBorder pt-3">
-              Total price of the items: {calcPrice()}€
+              Total price of the items: {calcPrice(searchValue)}€
             </th>
           </tr>
         </tbody>

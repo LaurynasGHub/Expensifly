@@ -46,7 +46,9 @@ function AppContextProvider(props) {
   //   }, [expensesData]);
 
   return (
-    <AppContext.Provider value={{ data }}>{props.children}</AppContext.Provider>
+    <AppContext.Provider value={{ data, setData }}>
+      {props.children}
+    </AppContext.Provider>
   );
 }
 
