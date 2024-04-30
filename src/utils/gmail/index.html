@@ -32,8 +32,7 @@
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      const SCOPES =
-        'https://www.googleapis.com/auth/gmail.readonly https://mail.google.com';
+      const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly';
 
       let tokenClient;
       let gapiInited = false;
@@ -183,11 +182,14 @@
         document.getElementById('contentEmails').innerText = messages;
       }
 
-      function getMessages(number) {
-        fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages', {
-          method: 'GET',
-          new
-        });
+      async function listInboxElements() {
+        let fetchUrl =
+          'https://gmail.googleapis.com/gmail/v1/users/me/messages';
+
+        const response = await fetch(fetchUrl);
+        const result = await response.json();
+
+        console.log(result);
       }
     </script>
     <script

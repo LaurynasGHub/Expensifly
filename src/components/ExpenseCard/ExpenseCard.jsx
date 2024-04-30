@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 
 import { cfg } from '../../cfg/cfg';
 
@@ -44,8 +44,6 @@ function ExpenseCard() {
   //function to add expense to the database
   async function addExpense() {
     try {
-      console.log('Add expense');
-
       const title = expenseName.current.value;
       const price = expensePrice.current.value;
       const year = expenseYear.current.value;
@@ -53,7 +51,7 @@ function ExpenseCard() {
       const day = expenseDay.current.value;
       const shop = expenseShop.current.value;
 
-      //set data
+      //set new expense
       const newExpense = {
         title,
         price,
@@ -74,7 +72,6 @@ function ExpenseCard() {
       });
       console.log('response-', response);
 
-      //update data in the database
       setData([...data, newExpense]);
     } catch (error) {
       console.log('ERROR', error);
@@ -82,10 +79,9 @@ function ExpenseCard() {
   }
 
   return (
-    <div className="expenseCard p-3 border rounded ">
+    <div className="expenseCard p-3 border rounded overflow">
       <div className="searchBar">
         <div className="input-group py-3">
-          {/* <p>Enter search parameters</p> */}
           <input
             type="text"
             id="year"
@@ -99,7 +95,7 @@ function ExpenseCard() {
             }}
           />
 
-          <select
+          {/* <select
             id="month"
             name="month"
             className="form-control"
@@ -134,15 +130,16 @@ function ExpenseCard() {
             placeholder="Shop"
             aria-label="Shop"
             aria-describedby="basic-addon2"
-          />
+          /> */}
 
-          {/* <div className="input-group-append"> */}
           <button className="btn btn-outline-secondary" type="button">
             <FontAwesomeIcon className="buttonSvg" icon={faMagnifyingGlass} />
           </button>
-          {/* </div> */}
         </div>
       </div>
+      <h6 className="mb-3 itemPrice">
+        Total price of the items: {calcPrice(searchValue)}€
+      </h6>
       <table className="table">
         <caption className="ms-2 mt-2">
           Add new expense
@@ -252,13 +249,6 @@ function ExpenseCard() {
                 <td> {item.year}</td>
               </tr>
             ))}
-        </tbody>
-        <tbody>
-          <tr>
-            <th scope="col" className="noBottomBorder pt-3">
-              Total price of the items: {calcPrice(searchValue)}€
-            </th>
-          </tr>
         </tbody>
       </table>
     </div>

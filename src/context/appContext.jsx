@@ -39,14 +39,8 @@ function AppContextProvider(props) {
     fetchData();
   }, []);
 
-  //   useEffect(() => {
-  //     // console.log('AppContextProvider useEffect');
-  //     // localStorage.setItem('data', JSON.stringify(data));
-  //     localStorage.setItem('expensesData', JSON.stringify(expensesData));
-  //   }, [expensesData]);
-
   return (
-    <AppContext.Provider value={{ data, setData }}>
+    <AppContext.Provider value={{ data, setData, loadingExpenses }}>
       {props.children}
     </AppContext.Provider>
   );

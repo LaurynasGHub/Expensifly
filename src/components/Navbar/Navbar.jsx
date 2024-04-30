@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faReceipt,
   faDollarSign,
-  faTag,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,27 +14,37 @@ function Navbar() {
   return (
     <nav className="navContainer p-4">
       <div className="navTitleContainer">
-        {/* <NavLink to="/"> */}
         <h1 className="navTitle">Expensifly</h1>
-        {/* </NavLink> */}
         <p className="navTitlePar mb-0">Budgeting reimagined</p>
       </div>
       <ul className="mb-0">
         <li className="p-2">
-          <NavLink to="/expenses">Expenses</NavLink>
-          <FontAwesomeIcon className="p-4" icon={faReceipt} />
+          <NavLink className={'hideOnResize'} to="/expenses">
+            Expenses
+          </NavLink>
+          <NavLink to="/expenses">
+            <FontAwesomeIcon className="p-4" icon={faReceipt} />
+          </NavLink>
         </li>
         <li className="p-2">
-          <NavLink to="/budget">Budget</NavLink>
-          <FontAwesomeIcon className="p-4" icon={faDollarSign} />
+          <NavLink className={'hideOnResize'} to="/budget">
+            Budget
+          </NavLink>
+          <NavLink to="/budget">
+            <FontAwesomeIcon className="p-4" icon={faDollarSign} />
+          </NavLink>
         </li>
-        <li className="p-2">
+        {/* <li className="p-2">
           <NavLink to="/current-prices">Current prices </NavLink>
           <FontAwesomeIcon className="p-4" icon={faTag} />
-        </li>
+        </li> */}
         <li className="p-2">
-          <NavLink to="/user">User </NavLink>
-          <FontAwesomeIcon className="p-4" icon={faUser} />
+          <NavLink className={'hideOnResize'} to="/user">
+            User
+          </NavLink>
+          <NavLink to="/user">
+            <FontAwesomeIcon className="p-4" icon={faUser} />
+          </NavLink>
         </li>
       </ul>
     </nav>
