@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './navbar.scss';
+
+import useAuth from '../../hooks/useAuth.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faReceipt,
   faDollarSign,
   faUser,
+  faTag,
 } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
+  const { token } = useAuth();
   return (
     <nav className="navContainer p-4">
       <div className="navTitleContainer">
@@ -34,10 +38,12 @@ function Navbar() {
             <FontAwesomeIcon className="p-4" icon={faDollarSign} />
           </NavLink>
         </li>
-        {/* <li className="p-2">
-          <NavLink to="/current-prices">Current prices </NavLink>
-          <FontAwesomeIcon className="p-4" icon={faTag} />
-        </li> */}
+        {token && (
+          <li className="p-2">
+            <NavLink to="/current-prices">Current prices </NavLink>
+            <FontAwesomeIcon className="p-4" icon={faTag} />
+          </li>
+        )}
         <li className="p-2">
           <NavLink className={'hideOnResize'} to="/user">
             User

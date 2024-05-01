@@ -9,9 +9,6 @@ export function calculateMonthExpenses(data, month) {
 
     .map((item) => priceArray.push(parseFloat(item.price)));
 
-  console.log('priceArr');
-  console.log(priceArray);
-
   for (let i = 0; i < priceArray.length; i++) {
     calcPrice += priceArray[i];
   }

@@ -8,13 +8,18 @@ import './expenseCard.scss';
 import { dayOrdinal } from '../../utils/dayOrdinalUtil';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlus,
+  faMagnifyingGlass,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 import { AppContext } from '../../context/appContext';
 
 function ExpenseCard() {
   const { data, setData } = useContext(AppContext);
 
   const [searchValue, setSearchValue] = useState('');
+  // const [noData, setNoData] = useState(true);
 
   const expenseName = useRef();
   const expensePrice = useRef();
@@ -78,6 +83,30 @@ function ExpenseCard() {
     }
   }
 
+  //function to delete expense from the database
+  async function deleteExpense(expenseId) {
+    try {
+      //delete data from backend
+      console.log('fetch address-', `${cfg.API.HOST}/expenses/${expenseId}`);
+      const response = await fetch(`${cfg.API.HOST}/expenses/${expenseId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'Application/json',
+        },
+
+        // body: JSON.stringify(expenseId),
+      });
+      console.log('response-', response);
+
+      //TODO
+      //setData to remap expenses
+      //calcPrice doesn't work because doesn't remap
+      // setData(data);
+      // setData([...data, expenseId]);
+    } catch (error) {
+      console.log('ERROR', error);
+    }
+  }
   return (
     <div className="expenseCard p-3 border rounded overflow">
       <div className="searchBar">
@@ -87,8 +116,6 @@ function ExpenseCard() {
             id="year"
             className="form-control"
             placeholder="Title"
-            aria-label="Title"
-            aria-describedby="basic-addon2"
             value={searchValue}
             onChange={(e) => {
               setSearchValue(e.target.value.toLowerCase());
@@ -120,16 +147,12 @@ function ExpenseCard() {
             className="form-control"
             id="day"
             placeholder="Day"
-            aria-label="Day"
-            aria-describedby="basic-addon3"
           />
           <input
             type="text"
             className="form-control"
             id="shop"
             placeholder="Shop"
-            aria-label="Shop"
-            aria-describedby="basic-addon2"
           /> */}
 
           <button className="btn btn-outline-secondary" type="button">
@@ -230,9 +253,18 @@ function ExpenseCard() {
             <th scope="col">Day</th>
             <th scope="col">Month</th>
             <th scope="col">Year</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
+          {/* {noData ? (
+            <tr>
+              <td>
+                <h1 className="noData">THERES NO DATA</h1>
+              </td>
+            </tr>
+          ) : null} */}
+
           {data
             .filter((item) => {
               return item.title
@@ -247,6 +279,17 @@ function ExpenseCard() {
                 <td> {`${item.day}${dayOrdinal(item.day)}`}</td>
                 <td> {item.month}</td>
                 <td> {item.year}</td>
+                <td>
+                  <button
+                    className="btn btn-outline-secondary"
+                    type="button"
+                    onClick={() => {
+                      deleteExpense(item._id);
+                    }}
+                  >
+                    <FontAwesomeIcon className="buttonSvg" icon={faTrash} />
+                  </button>
+                </td>
               </tr>
             ))}
         </tbody>
