@@ -1,25 +1,25 @@
 import React, { useState, useRef, useContext } from 'react';
 
-import { cfg } from '../../cfg/cfg';
-
 import './expenseCard.scss';
 
-//utils
+//utils,context
 import { dayOrdinal } from '../../utils/dayOrdinalUtil';
+import { cfg } from '../../cfg/cfg';
+import { AppContext } from '../../context/appContext';
 
+//icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlus,
   faMagnifyingGlass,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { AppContext } from '../../context/appContext';
 
 function ExpenseCard() {
-  const { data, setData } = useContext(AppContext);
+  const { data, setData, loadingExpenses } = useContext(AppContext);
 
   const [searchValue, setSearchValue] = useState('');
-  // const [noData, setNoData] = useState(true);
+  const [inputValidation, setInputValidation] = useState('');
 
   const expenseName = useRef();
   const expensePrice = useRef();
@@ -46,6 +46,54 @@ function ExpenseCard() {
     return calcPrice.toFixed(2);
   }
 
+  function expenseInputValidation() {
+    const title = expenseName.current.value;
+    const price = expensePrice.current.value;
+    const year = expenseYear.current.value;
+    const month = expenseMonth.current.value;
+    const day = expenseDay.current.value;
+    const shop = expenseShop.current.value;
+
+    const monthsOfYear = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    if (!title.length) {
+      return 'Title cannot be empty';
+    }
+
+    if (price <= 0) {
+      return 'Price cannot be equal or lower than 0';
+    }
+
+    if (year <= 0) {
+      return 'Year cannot be equal or lower than 0';
+    }
+
+    if (!month || !monthsOfYear.includes(month)) {
+      return 'Please provide month';
+    }
+
+    if (day <= 0 || day > 31) {
+      return 'Day cannot be lower or equal to 0, and cannot be higher than 31';
+    }
+
+    if (shop.length === 0) {
+      return 'Shop cannot be empty';
+    }
+  }
+
   //function to add expense to the database
   async function addExpense() {
     try {
@@ -55,6 +103,16 @@ function ExpenseCard() {
       const month = expenseMonth.current.value;
       const day = expenseDay.current.value;
       const shop = expenseShop.current.value;
+
+      //check input fields
+      const validationResponse = expenseInputValidation();
+      console.log('inputValidation-', validationResponse);
+
+      if (validationResponse) {
+        setInputValidation(validationResponse);
+        console.log('expenseInputValidation-', validationResponse);
+        return;
+      }
 
       //set new expense
       const newExpense = {
@@ -77,7 +135,11 @@ function ExpenseCard() {
       });
       console.log('response-', response);
 
-      setData([...data, newExpense]);
+      //get the response and THEN insert it to data
+      //id is needed
+      const newExpenseData = await response.json();
+
+      setData([...data, newExpenseData]);
     } catch (error) {
       console.log('ERROR', error);
     }
@@ -87,7 +149,6 @@ function ExpenseCard() {
   async function deleteExpense(expenseId) {
     try {
       //delete data from backend
-      console.log('fetch address-', `${cfg.API.HOST}/expenses/${expenseId}`);
       const response = await fetch(`${cfg.API.HOST}/expenses/${expenseId}`, {
         method: 'DELETE',
         headers: {
@@ -99,14 +160,15 @@ function ExpenseCard() {
       console.log('response-', response);
 
       //TODO
-      //setData to remap expenses
-      //calcPrice doesn't work because doesn't remap
-      // setData(data);
-      // setData([...data, expenseId]);
+      //add response error handler
+      if (response.ok) {
+        setData(data.filter((item) => item._id !== expenseId));
+      }
     } catch (error) {
       console.log('ERROR', error);
     }
   }
+
   return (
     <div className="expenseCard p-3 border rounded overflow">
       <div className="searchBar">
@@ -115,45 +177,15 @@ function ExpenseCard() {
             type="text"
             id="year"
             className="form-control"
-            placeholder="Title"
+            placeholder="Search by title"
             value={searchValue}
             onChange={(e) => {
               setSearchValue(e.target.value.toLowerCase());
             }}
           />
 
-          {/* <select
-            id="month"
-            name="month"
-            className="form-control"
-            placeholder="Month"
-          >
-            <option value="December">Month</option>
-            <option value="January">January</option>
-            <option value="February">February</option>
-            <option value="March">March</option>
-            <option value="April">April</option>
-            <option value="May">May</option>
-            <option value="June">June</option>
-            <option value="July">July</option>
-            <option value="8August">August</option>
-            <option value="September">September</option>
-            <option value="October">October</option>
-            <option value="November">November</option>
-            <option value="December">December</option>
-          </select>
-          <input
-            type="number"
-            className="form-control"
-            id="day"
-            placeholder="Day"
-          />
-          <input
-            type="text"
-            className="form-control"
-            id="shop"
-            placeholder="Shop"
-          /> */}
+          {/* TODO
+          add more filters- by month, day etc. */}
 
           <button className="btn btn-outline-secondary" type="button">
             <FontAwesomeIcon className="buttonSvg" icon={faMagnifyingGlass} />
@@ -210,7 +242,6 @@ function ExpenseCard() {
                 className="form-control"
                 ref={expenseMonth}
               >
-                <option value="December">Month</option>
                 <option value="January">January</option>
                 <option value="February">February</option>
                 <option value="March">March</option>
@@ -244,6 +275,11 @@ function ExpenseCard() {
               </div>
             </div>
           </div>
+          {inputValidation && (
+            <div className="col-md-8 mx-auto text-center p-3">
+              {inputValidation}
+            </div>
+          )}
         </caption>
         <thead>
           <tr>
@@ -257,13 +293,13 @@ function ExpenseCard() {
           </tr>
         </thead>
         <tbody>
-          {/* {noData ? (
+          {loadingExpenses ? (
             <tr>
               <td>
-                <h1 className="noData">THERES NO DATA</h1>
+                <h1 className="noData">EXPENSES ARE LOADING</h1>
               </td>
             </tr>
-          ) : null} */}
+          ) : null}
 
           {data
             .filter((item) => {

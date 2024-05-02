@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './navbar.scss';
@@ -38,6 +38,10 @@ function Navbar() {
             <FontAwesomeIcon className="p-4" icon={faDollarSign} />
           </NavLink>
         </li>
+
+        {/* TODO
+        check if user is logged in, if yes then show expenses tab, else hide it */}
+
         {token && (
           <li className="p-2">
             <NavLink to="/current-prices">Current prices </NavLink>

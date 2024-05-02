@@ -7,6 +7,8 @@ export const AppContext = createContext();
 function AppContextProvider(props) {
   const [loadingExpenses, setLoadingExpenses] = useState(false);
   const [data, setData] = useState(
+    //TODO
+    //finish setting up local storage/cache
     JSON.parse(localStorage.getItem('expensesData')) || []
   );
 

@@ -10,10 +10,6 @@ import CurrentPrices from './components/CurrentPrices/CurrentPrices';
 import Expenses from './components/Expenses/Expenses';
 import User from './components/User/User';
 
-//TODO
-//change default opening path, now opens to empty window
-//expenseCard doesn't rerender expenses
-
 function App() {
   return (
     <>

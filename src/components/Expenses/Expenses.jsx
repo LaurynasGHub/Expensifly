@@ -3,7 +3,6 @@ import React from 'react';
 import './expenses.scss';
 
 //components
-
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
 
 function Expenses() {

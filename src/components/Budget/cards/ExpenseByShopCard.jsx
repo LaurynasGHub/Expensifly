@@ -20,10 +20,8 @@ function ExpenseByShopCard() {
     // Add event listener to window resize
     window.addEventListener('resize', handleResize);
 
-    //check on component mount
     handleResize();
 
-    // Clean up on unmount
     return () => {
       window.removeEventListener('resize', handleResize);
     };
