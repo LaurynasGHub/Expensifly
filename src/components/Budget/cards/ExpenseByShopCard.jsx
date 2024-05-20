@@ -30,6 +30,7 @@ function ExpenseByShopCard() {
   return (
     <div
       className={
+        //kodo dubliavimas
         isMobile
           ? 'text-center budgetCard border rounded p-3 m-3'
           : 'text-center budgetCard border rounded p-3 m-3 w-50'
