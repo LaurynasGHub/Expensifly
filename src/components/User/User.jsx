@@ -1,10 +1,13 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, createContext, useContext } from 'react';
 
 import { cfg } from '../../cfg/cfg';
+
+import { LogInContext } from '../../context/logInContext';
+
 import './user.scss';
 
 function User() {
-  const [logIn, setLogIn] = useState(false);
+  const { logIn, setLogIn } = useContext(LogInContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -36,11 +39,10 @@ function User() {
         throw new Error('username or password is incorrect');
       } else {
         setError('');
-        console.log('successfully logged in');
+        const user = await response.json();
+        console.log('successfully logged in', user);
         setLogIn(true);
       }
-
-      const user = await response.json();
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -49,12 +51,10 @@ function User() {
   };
 
   // TODO
-  // when logged in pass a token that user is logged in
   // show data that is stored in the server using the userId
-  // add error handlers for no password/username
   // clean code, refactor
-  // when user is logged in show current prices window
-  // when user is not logged in show no data in expenses, hide budget tab
+  //if user is not logged in don't let them access /expenses etc.
+  //even if it's not shown in the navbar
   // Keep user logged in on page reload
   // add logout button
 
@@ -62,7 +62,6 @@ function User() {
     <div class="col-md-8 mx-auto text-center p-3">
       {!logIn ? (
         <>
-          {' '}
           <div className="logInText my-5 ">
             <h4>Hi! welcome to Expensifly</h4>
             <h4 className="my-3">Please log in</h4>
@@ -77,7 +76,7 @@ function User() {
             ></input>
             <h5 className="mt-4">Password</h5>
             <input
-              type="text"
+              type="password"
               id="password"
               placeholder="password"
               ref={getPassword}

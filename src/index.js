@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 
 import AppContextProvider from './context/appContext';
 import AuthContextProvider from './context/authContext';
+import LogInProvider from './context/logInContext';
 
 import './index.css';
 import './variables.css';
@@ -18,7 +19,9 @@ root.render(
     <BrowserRouter>
       <AuthContextProvider>
         <AppContextProvider>
-          <App />
+          <LogInProvider>
+            <App />
+          </LogInProvider>
         </AppContextProvider>
       </AuthContextProvider>
     </BrowserRouter>

@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './navbar.scss';
-
-import useAuth from '../../hooks/useAuth.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,8 +11,11 @@ import {
   faTag,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { LogInContext } from '../../context/logInContext';
+
 function Navbar() {
-  const { token } = useAuth();
+  const { logIn } = useContext(LogInContext);
+
   return (
     <nav className="navContainer p-4">
       <div className="navTitleContainer">
@@ -22,27 +23,31 @@ function Navbar() {
         <p className="navTitlePar mb-0">Budgeting reimagined</p>
       </div>
       <ul className="mb-0">
-        <li className="p-2">
-          <NavLink className={'hideOnResize'} to="/expenses">
-            Expenses
-          </NavLink>
-          <NavLink to="/expenses">
-            <FontAwesomeIcon className="p-4" icon={faReceipt} />
-          </NavLink>
-        </li>
-        <li className="p-2">
-          <NavLink className={'hideOnResize'} to="/budget">
-            Budget
-          </NavLink>
-          <NavLink to="/budget">
-            <FontAwesomeIcon className="p-4" icon={faDollarSign} />
-          </NavLink>
-        </li>
+        {logIn && (
+          <li className="p-2">
+            <NavLink className={'hideOnResize'} to="/expenses">
+              Expenses
+            </NavLink>
+            <NavLink to="/expenses">
+              <FontAwesomeIcon className="p-4" icon={faReceipt} />
+            </NavLink>
+          </li>
+        )}
+        {logIn && (
+          <li className="p-2">
+            <NavLink className={'hideOnResize'} to="/budget">
+              Budget
+            </NavLink>
+            <NavLink to="/budget">
+              <FontAwesomeIcon className="p-4" icon={faDollarSign} />
+            </NavLink>
+          </li>
+        )}
 
         {/* TODO
         check if user is logged in, if yes then show expenses tab, else hide it */}
 
-        {token && (
+        {logIn && (
           <li className="p-2">
             <NavLink to="/current-prices">Current prices </NavLink>
             <FontAwesomeIcon className="p-4" icon={faTag} />

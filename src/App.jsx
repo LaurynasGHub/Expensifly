@@ -19,7 +19,7 @@ function App() {
         <Route path="/budget" element={<Budget />} />
         <Route path="/current-prices" element={<CurrentPrices />} />
         <Route path="/user" element={<User />} />
-        <Route path="*" element={<Navigate to="/expenses" />} />
+        <Route path="*" element={<Navigate to="/user" />} />
       </Routes>
     </>
   );
