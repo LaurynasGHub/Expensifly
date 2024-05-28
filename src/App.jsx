@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { LogInContext } from './context/logInContext';
 
 import './App.scss';
 
@@ -11,13 +12,14 @@ import Expenses from './components/Expenses/Expenses';
 import User from './components/User/User';
 
 function App() {
+  const { logIn } = useContext(LogInContext);
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/expenses" element={<Expenses />} />
-        <Route path="/budget" element={<Budget />} />
-        <Route path="/current-prices" element={<CurrentPrices />} />
+        {logIn && <Route path="/expenses" element={<Expenses />} />}
+        {logIn && <Route path="/budget" element={<Budget />} />}
+        {logIn && <Route path="/current-prices" element={<CurrentPrices />} />}
         <Route path="/user" element={<User />} />
         <Route path="*" element={<Navigate to="/user" />} />
       </Routes>

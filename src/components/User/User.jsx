@@ -50,14 +50,6 @@ function User() {
     }
   };
 
-  // TODO
-  // show data that is stored in the server using the userId
-  // clean code, refactor
-  //if user is not logged in don't let them access /expenses etc.
-  //even if it's not shown in the navbar
-  // Keep user logged in on page reload
-  // add logout button
-
   return (
     <div class="col-md-8 mx-auto text-center p-3">
       {!logIn ? (

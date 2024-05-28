@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-
-import './navbar.scss';
+import { LogInContext } from '../../context/logInContext';
+import { Button, Nav } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,12 +9,14 @@ import {
   faDollarSign,
   faUser,
   faTag,
+  faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { LogInContext } from '../../context/logInContext';
+import './navbar.scss';
+import '../../App.scss';
 
 function Navbar() {
-  const { logIn } = useContext(LogInContext);
+  const { logIn, setLogIn } = useContext(LogInContext);
 
   return (
     <nav className="navContainer p-4">
@@ -44,23 +46,44 @@ function Navbar() {
           </li>
         )}
 
-        {/* TODO
-        check if user is logged in, if yes then show expenses tab, else hide it */}
-
         {logIn && (
           <li className="p-2">
-            <NavLink to="/current-prices">Current prices </NavLink>
-            <FontAwesomeIcon className="p-4" icon={faTag} />
+            <NavLink className={'hideOnResize'} to="/current-prices">
+              Current prices
+            </NavLink>
+            <NavLink to="/current-prices">
+              <FontAwesomeIcon className="p-4" icon={faTag} />
+            </NavLink>
           </li>
         )}
-        <li className="p-2">
-          <NavLink className={'hideOnResize'} to="/user">
-            User
-          </NavLink>
-          <NavLink to="/user">
-            <FontAwesomeIcon className="p-4" icon={faUser} />
-          </NavLink>
-        </li>
+        {!logIn ? (
+          <li className="p-2">
+            <NavLink className={'hideOnResize'} to="/user">
+              User
+            </NavLink>
+            <NavLink to="/user">
+              <FontAwesomeIcon className="p-4" icon={faUser} />
+            </NavLink>
+          </li>
+        ) : (
+          <li className="p-2">
+            <button
+              className="non-styled-button hideOnResize"
+              onClick={() => {
+                setLogIn(false);
+              }}
+            >
+              Log Out
+            </button>
+            <FontAwesomeIcon
+              className="p-4"
+              icon={faRightFromBracket}
+              onClick={() => {
+                setLogIn(false);
+              }}
+            ></FontAwesomeIcon>
+          </li>
+        )}
       </ul>
     </nav>
   );
