@@ -2,9 +2,9 @@
 
 ## Expenses data handling for each user
 
-// Change how data is stored in the server:
-// add userId attribute to each element,
-// show only data that is specific to that user
+// Change how data is stored in the server: return
+// add userId attribute to each element, return
+// show only data that is specific to that user return
 
 ## Add local storage handlers
 
