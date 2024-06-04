@@ -3,11 +3,13 @@ import { useContext, useEffect, useState } from 'react';
 import { calculateMonthExpenses } from '../../../utils/calculateMonthExpenses';
 
 import { AppContext } from '../../../context/appContext';
+import { UserIdContext } from '../../../context/userIdContext';
 
 function ExpenseByMonthCard() {
   const { data } = useContext(AppContext);
+  const { userId } = useContext(UserIdContext);
 
-  let uniqueShops = [...new Set(data.map((item) => item.month))];
+  let uniqueMonths = [...new Set(data.map((item) => item.month))];
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -46,10 +48,12 @@ function ExpenseByMonthCard() {
         <tbody>
           {/* TODO */}
           {/* add year filter, so that data can be filtered by year+month */}
-          {uniqueShops.map((item) => (
+          {uniqueMonths.map((item) => (
             <tr key={item}>
               <td>{item}</td>
-              <td>{calculateMonthExpenses(data, item.toLowerCase())} €</td>
+              <td>
+                {calculateMonthExpenses(data, item.toLowerCase(), userId)} €
+              </td>
             </tr>
           ))}
         </tbody>

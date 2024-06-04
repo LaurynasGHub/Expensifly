@@ -3,9 +3,11 @@ import { useContext, useState, useEffect } from 'react';
 import { calculateShopExpenses } from '../../../utils/calculateShopExpenses';
 
 import { AppContext } from '../../../context/appContext';
+import { UserIdContext } from '../../../context/userIdContext';
 
 function ExpenseByShopCard() {
   const { data } = useContext(AppContext);
+  const { userId } = useContext(UserIdContext);
 
   let uniqueShops = [...new Set(data.map((item) => item.shop))];
 
@@ -48,7 +50,7 @@ function ExpenseByShopCard() {
           {uniqueShops.map((item) => (
             <tr key={item}>
               <td>{item}</td>
-              <td>{calculateShopExpenses(data, item)} €</td>
+              <td>{calculateShopExpenses(data, item, userId)} €</td>
             </tr>
           ))}
         </tbody>

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 import { cfg } from '../cfg/cfg';
 
@@ -26,8 +26,6 @@ function AppContextProvider(props) {
 
       //set expenses to fetched data, convert it to json
       const expenses = await response.json();
-
-      console.log('data', expenses);
 
       setData(expenses);
     } catch (error) {

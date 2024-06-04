@@ -6,6 +6,7 @@ import './expenseCard.scss';
 import { dayOrdinal } from '../../utils/dayOrdinalUtil';
 import { cfg } from '../../cfg/cfg';
 import { AppContext } from '../../context/appContext';
+import { UserIdContext } from '../../context/userIdContext';
 
 //icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +18,7 @@ import {
 
 function ExpenseCard() {
   const { data, setData, loadingExpenses } = useContext(AppContext);
+  const { userId, setUserId } = useContext(UserIdContext);
 
   const [searchValue, setSearchValue] = useState('');
   const [inputValidation, setInputValidation] = useState('');
@@ -35,6 +37,9 @@ function ExpenseCard() {
     data
       .filter((item) => {
         return item.title.toLowerCase().includes(searchValue.toLowerCase());
+      })
+      .filter((item) => {
+        return item.userId == userId;
       })
 
       .map((item) => priceArray.push(parseFloat(item.price)));
@@ -122,6 +127,7 @@ function ExpenseCard() {
         month,
         day,
         shop,
+        userId,
       };
 
       //post new data to backend
@@ -135,8 +141,6 @@ function ExpenseCard() {
       });
       console.log('response-', response);
 
-      //get the response and THEN insert it to data
-      //id is needed
       const newExpenseData = await response.json();
 
       setData([...data, newExpenseData]);
@@ -306,6 +310,9 @@ function ExpenseCard() {
               return item.title
                 .toLowerCase()
                 .includes(searchValue.toLowerCase());
+            })
+            .filter((item) => {
+              return item.userId == userId;
             })
             .map((item) => (
               <tr key={`${item.title}${item.price}`}>

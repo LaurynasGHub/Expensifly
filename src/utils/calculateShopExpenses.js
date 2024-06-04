@@ -1,10 +1,13 @@
-export function calculateShopExpenses(data, shopName) {
+export function calculateShopExpenses(data, shopName, userId) {
   let calcPrice = 0;
   let priceArray = [];
 
   data
     .filter((item) => {
       return item.shop.toLowerCase().includes(shopName);
+    })
+    .filter((item) => {
+      return item.userId === userId;
     })
 
     .map((item) => priceArray.push(parseFloat(item.price)));

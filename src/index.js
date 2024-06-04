@@ -12,6 +12,7 @@ import './variables.css';
 
 //components
 import App from './App';
+import UserIdProvider from './context/userIdContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,7 +21,9 @@ root.render(
       <AuthContextProvider>
         <AppContextProvider>
           <LogInProvider>
-            <App />
+            <UserIdProvider>
+              <App />
+            </UserIdProvider>
           </LogInProvider>
         </AppContextProvider>
       </AuthContextProvider>
