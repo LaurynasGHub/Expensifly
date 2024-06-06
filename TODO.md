@@ -5,15 +5,17 @@
 - Change how data is stored in the server: DONE
 - add userId attribute to each element, DONE
 - show only data that is specific to that user DONE
-- pass shop data as first uppercase then all lowercase letters
+- pass shop data as first uppercase then all lowercase letters DONE
 
 ## Budget cards updates
 
 - Change so budget cards show only specific users data:
 - - expense by month card DONE
-- - expense by year card
-- - expense by shop card:
-- - - filter shops, doesn't show data right now, specifically Lidl shop
+- - expense by year card DONE
+- - expense by shop card: DONE
+- - - filter shops, doesn't show data right now, specifically Lidl shop FIXED
+- Add diagrams
+- Add more filters to budget page
 
 ## Add local storage handlers
 

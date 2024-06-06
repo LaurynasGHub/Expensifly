@@ -3,6 +3,7 @@ export function calculateShopExpenses(data, shopName, userId) {
   let priceArray = [];
 
   data
+
     .filter((item) => {
       return item.shop.toLowerCase().includes(shopName);
     })

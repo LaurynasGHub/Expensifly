@@ -9,6 +9,15 @@ function ExpenseByShopCard() {
   const { data } = useContext(AppContext);
   const { userId } = useContext(UserIdContext);
 
+  function capitalizeFirstLetter(string) {
+    const lowerCaseString = string.toLowerCase();
+
+    const returnString =
+      lowerCaseString.charAt(0).toUpperCase() + lowerCaseString.slice(1);
+
+    return returnString;
+  }
+
   let uniqueShops = [...new Set(data.map((item) => item.shop))];
 
   const [isMobile, setIsMobile] = useState(false);
@@ -49,8 +58,10 @@ function ExpenseByShopCard() {
         <tbody>
           {uniqueShops.map((item) => (
             <tr key={item}>
-              <td>{item}</td>
-              <td>{calculateShopExpenses(data, item, userId)} €</td>
+              <td>{capitalizeFirstLetter(item)}</td>
+              <td>
+                {calculateShopExpenses(data, item.toLowerCase(), userId)} €
+              </td>
             </tr>
           ))}
         </tbody>

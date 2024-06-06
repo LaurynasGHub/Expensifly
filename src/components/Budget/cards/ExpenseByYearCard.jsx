@@ -3,9 +3,11 @@ import { useContext, useState, useEffect } from 'react';
 import { calculateYearExpenses } from '../../../utils/calculateYearExpenses';
 
 import { AppContext } from '../../../context/appContext';
+import { UserIdContext } from '../../../context/userIdContext';
 
 function ExpenseByYearCard() {
   const { data } = useContext(AppContext);
+  const { userId } = useContext(UserIdContext);
 
   let uniqueYears = [
     ...new Set(data.map((item) => item.year).sort((a, b) => a - b)),
@@ -49,7 +51,7 @@ function ExpenseByYearCard() {
           {uniqueYears.map((item) => (
             <tr key={item}>
               <td>{item}</td>
-              <td>{calculateYearExpenses(data, item)} €</td>
+              <td>{calculateYearExpenses(data, item, userId)} €</td>
             </tr>
           ))}
         </tbody>

@@ -39,7 +39,7 @@ function ExpenseCard() {
         return item.title.toLowerCase().includes(searchValue.toLowerCase());
       })
       .filter((item) => {
-        return item.userId == userId;
+        return item.userId === userId;
       })
 
       .map((item) => priceArray.push(parseFloat(item.price)));
@@ -99,6 +99,15 @@ function ExpenseCard() {
     }
   }
 
+  function capitalizeFirstLetter(string) {
+    const lowerCaseString = string.toLowerCase();
+
+    const returnString =
+      lowerCaseString.charAt(0).toUpperCase() + lowerCaseString.slice(1);
+
+    return returnString;
+  }
+
   //function to add expense to the database
   async function addExpense() {
     try {
@@ -107,7 +116,9 @@ function ExpenseCard() {
       const year = expenseYear.current.value;
       const month = expenseMonth.current.value;
       const day = expenseDay.current.value;
-      const shop = expenseShop.current.value;
+      const inputShop = expenseShop.current.value;
+
+      const shop = capitalizeFirstLetter(inputShop);
 
       //check input fields
       const validationResponse = expenseInputValidation();
@@ -312,7 +323,7 @@ function ExpenseCard() {
                 .includes(searchValue.toLowerCase());
             })
             .filter((item) => {
-              return item.userId == userId;
+              return item.userId === userId;
             })
             .map((item) => (
               <tr key={`${item.title}${item.price}`}>
