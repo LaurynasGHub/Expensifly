@@ -14,6 +14,7 @@
 - - expense by year card DONE
 - - expense by shop card: DONE
 - - - filter shops, doesn't show data right now, specifically Lidl shop FIXED
+- Remove filter by userId from cards, data is already passed filtered DONE
 - Add diagrams
 - Add more filters to budget page
 
@@ -24,10 +25,12 @@
 
 ## Add register user button
 
+- Add register user form
 - check if user doesn't exist
 - add user to the database
 
 ## Misc
 
+- Make that data from AppContext passes already filtered by user, will make code faster DONE
 - clean code, refactor
 - Add loading handlers

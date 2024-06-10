@@ -3,11 +3,9 @@ import { useContext, useState, useEffect } from 'react';
 import { calculateShopExpenses } from '../../../utils/calculateShopExpenses';
 
 import { AppContext } from '../../../context/appContext';
-import { UserIdContext } from '../../../context/userIdContext';
 
 function ExpenseByShopCard() {
   const { data } = useContext(AppContext);
-  const { userId } = useContext(UserIdContext);
 
   function capitalizeFirstLetter(string) {
     const lowerCaseString = string.toLowerCase();
@@ -59,9 +57,7 @@ function ExpenseByShopCard() {
           {uniqueShops.map((item) => (
             <tr key={item}>
               <td>{capitalizeFirstLetter(item)}</td>
-              <td>
-                {calculateShopExpenses(data, item.toLowerCase(), userId)} €
-              </td>
+              <td>{calculateShopExpenses(data, item.toLowerCase())} €</td>
             </tr>
           ))}
         </tbody>

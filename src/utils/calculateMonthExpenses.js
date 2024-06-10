@@ -1,13 +1,10 @@
-export function calculateMonthExpenses(data, month, userId) {
+export function calculateMonthExpenses(data, month) {
   let calcPrice = 0;
   let priceArray = [];
 
   data
     .filter((item) => {
       return item.month.toLowerCase().includes(month);
-    })
-    .filter((item) => {
-      return item.userId === userId;
     })
     .map((item) => priceArray.push(parseFloat(item.price)));
 

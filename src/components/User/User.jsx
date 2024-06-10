@@ -9,9 +9,11 @@ import './user.scss';
 
 function User() {
   const { logIn, setLogIn } = useContext(LogInContext);
+  const [error, setError] = useState('');
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
+
   const { userId, setUserId } = useContext(UserIdContext);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const getUsername = useRef();
   const getPassword = useRef();
@@ -79,11 +81,20 @@ function User() {
             ></input>
           </form>
           <div className="error-message mt-3">{error}</div>
-          <button type="button" className="my-4 btn" onClick={handleLogIn}>
-            Log in
-          </button>
+
+          <div className="user-login-register">
+            <button type="button" className="btn" onClick={handleLogIn}>
+              Log in
+            </button>
+            <div>-</div>
+            <button className="btn" onClick={() => setShowRegisterForm(true)}>
+              Not a member yet? Register
+            </button>
+          </div>
         </>
       ) : null}
+
+      {showRegisterForm ? <div>REGISTER</div> : null}
 
       {logIn ? (
         <div className="logged-in-successfully m-5">LOGGED IN SUCCESSFULLY</div>
