@@ -25,9 +25,16 @@
 
 ## Add register user button
 
-- Add register user form
-- check if user doesn't exist
-- add user to the database
+- Add register user form DONE
+- check if user doesn't exist DONE
+- add user to the database DONE
+- Register user form validation
+- Register user password check (check if password is strong enough)
+- Delete user
+
+## Write tests
+
+- Write tests for expense and user creation
 
 ## Misc
 

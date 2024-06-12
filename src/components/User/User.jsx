@@ -9,7 +9,8 @@ import './user.scss';
 
 function User() {
   const { logIn, setLogIn } = useContext(LogInContext);
-  const [error, setError] = useState('');
+  const [logInError, setLogInError] = useState('');
+  const [registerError, setRegisterError] = useState('');
   const [showRegisterForm, setShowRegisterForm] = useState(false);
 
   const { userId, setUserId } = useContext(UserIdContext);
@@ -17,6 +18,8 @@ function User() {
 
   const getUsername = useRef();
   const getPassword = useRef();
+  const getRegisterUsername = useRef();
+  const getRegisterPassword = useRef();
 
   const handleLogIn = async (e) => {
     e.preventDefault();
@@ -39,14 +42,52 @@ function User() {
       });
 
       if (!response.ok) {
-        setError('username or password is incorrect');
+        setLogInError('username or password is incorrect');
         throw new Error('username or password is incorrect');
       } else {
-        setError('');
+        setLogInError('');
         const user = await response.json();
         console.log('successfully logged in', user);
         setUserId(user);
         setLogIn(true);
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+
+    const username = getRegisterUsername.current.value;
+    const password = getRegisterPassword.current.value;
+
+    try {
+      setLoading(true);
+
+      const response = await fetch(`${cfg.API.HOST}/user`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'Application/json',
+
+          Authorization: 'Bearer token',
+        },
+
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        setRegisterError('username already exists');
+        throw new Error('username already exists');
+      } else {
+        setRegisterError('');
+        const user = await response.json();
+        console.log('successfully registered', user);
+        setRegisterError('successfully registered');
+        // setUserId(user);
+        // setLogIn(true);
       }
     } catch (error) {
       console.log(error.message);
@@ -69,7 +110,7 @@ function User() {
               type="text"
               id="userName"
               placeholder="user name"
-              ref={getUsername}
+              ref={getRegisterUsername}
             ></input>
             <h5 className="mt-4">Password</h5>
             <input
@@ -77,10 +118,10 @@ function User() {
               id="password"
               placeholder="password"
               autoComplete="on"
-              ref={getPassword}
+              ref={getRegisterPassword}
             ></input>
           </form>
-          <div className="error-message mt-3">{error}</div>
+          <div className="error-message mt-3">{logInError}</div>
 
           <div className="user-login-register">
             <button type="button" className="btn" onClick={handleLogIn}>
@@ -94,7 +135,34 @@ function User() {
         </>
       ) : null}
 
-      {showRegisterForm ? <div>REGISTER</div> : null}
+      {showRegisterForm ? (
+        <div className="mt-4">
+          <form className="logInInputs">
+            <h5 className="mt-3">PLease enter your desired user name</h5>
+            <input
+              type="text"
+              id="userName"
+              placeholder="user name"
+              ref={getRegisterUsername}
+            ></input>
+            <h5 className="mt-4">Choose a strong password</h5>
+            <input
+              type="password"
+              id="password"
+              placeholder="password"
+              autoComplete="on"
+              ref={getRegisterPassword}
+            ></input>
+          </form>
+          <div className="error-message mt-3">{registerError}</div>
+
+          <div className="user-login-register">
+            <button type="button" className="btn" onClick={registerUser}>
+              Register
+            </button>
+          </div>
+        </div>
+      ) : null}
 
       {logIn ? (
         <div className="logged-in-successfully m-5">LOGGED IN SUCCESSFULLY</div>
