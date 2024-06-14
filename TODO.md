@@ -41,3 +41,4 @@
 - Make that data from AppContext passes already filtered by user, will make code faster DONE
 - clean code, refactor
 - Add loading handlers
+- Add handlers for when server is unavailable (can't connect to server)
