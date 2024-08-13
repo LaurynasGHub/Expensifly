@@ -41,3 +41,10 @@
 - Make that data from AppContext passes already filtered by user, will make code faster DONE
 - clean code, refactor
 - Add loading handlers
+- Make two options for themes- dark and light
+  -- Add state called theme
+  -- Make it toggle between dark and light theme
+  -- Add button to toggle it
+  -- In App.scss make two styles- one for dark and one for light theme?
+  -- Or option two- dependent on state make which App.scss it uses
+  -- App_light.scss or App_dark.scss ??
